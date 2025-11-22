@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <title>CoatVision – Bildeopplasting</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 CoatVision – Bildeanalyse</h1>
+        <p>Last opp et bilde for å analysere overflate, glans og kontrast (coating vs. ikke-coating).</p>
+
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <br><br>
+            <button type="submit">Analyser bilde</button>
+        </form>
+    </div>
+</body>
+</html>
