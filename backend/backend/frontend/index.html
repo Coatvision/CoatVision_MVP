@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <title>CoatVision – Modul 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+  <h1>CoatVision – Modul 1</h1>
+
+  <p>Last opp et bilde av et panel for analyse.</p>
+
+  <input type="file" id="fileInput" accept="image/*" />
+  <button id="analyzeBtn">Analyser</button>
+
+  <h2>Resultat</h2>
+  <pre id="result">Ingen analyse ennå.</pre>
+
+  <script>
+    const btn = document.getElementById("analyzeBtn");
+    const fileInput = document.getElementById("fileInput");
+    const resultEl = document.getElementById("result");
+
+    btn.onclick = async () => {
+      if (!fileInput.files.length) {
+        alert("Velg et bilde først.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+
+      resultEl.textContent = "Analyserer ...";
+
+      try {
+        const res = await fetch("/analyze", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!res.ok) {
+          resultEl.textContent = "Feil fra server: " + res.status;
+          return;
+        }
+
+        const data = await res.json();
+        resultEl.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        resultEl.textContent = "Nettverksfeil: " + err;
+      }
+    };
+  </script>
+</body>
+</html>
