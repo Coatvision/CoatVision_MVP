@@ -1,3 +1,14 @@
 node_modules
 __pycache__/
 *.pyc
+.env
+.env.local
+.env.*.local
+dist/
+build/
+*.egg-info/
+.eggs/
+*.log
+.DS_Store
+.venv/
+venv/

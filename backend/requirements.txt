@@ -1,0 +1,15 @@
+# backend/requirements.txt
+# v2
+fastapi==0.115.0
+uvicorn[standard]==0.30.0
+
+# OpenAI-klient
+openai==1.51.0
+
+# OpenCV for image processing
+opencv-python>=4.8
+
+# Other dependencies
+numpy>=1.24
+python-multipart
+pydantic
