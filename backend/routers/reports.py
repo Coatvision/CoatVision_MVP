@@ -2,7 +2,6 @@
 from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import FileResponse
 from typing import Optional
-from pathlib import Path
 import tempfile
 import os
 
