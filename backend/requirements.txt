@@ -9,6 +9,9 @@ openai==1.51.0
 # OpenCV for image processing
 opencv-python>=4.8
 
+# PDF generation
+reportlab>=4.0
+
 # Other dependencies
 numpy>=1.24
 python-multipart

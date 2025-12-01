@@ -1,7 +1,7 @@
 // frontend/src/pages/Dashboard.jsx
 // v1
 import React, { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { supabase, isSupabaseConfigured } from "../lib/supabaseClient";
 import KpiCard from "../components/KpiCard";
 
 export default function Dashboard() {
@@ -11,6 +11,13 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function fetchResults() {
+      // Check if Supabase is configured
+      if (!isSupabaseConfigured()) {
+        setError("Supabase not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.");
+        setLoading(false);
+        return;
+      }
+
       try {
         const { data, error } = await supabase
           .from("analysis_results")

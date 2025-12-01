@@ -7,6 +7,14 @@ from typing import Dict, Optional
 import cv2
 import numpy as np
 
+# Analysis configuration constants
+# Maximum expected hue standard deviation (OpenCV hue range is 0-180)
+MAX_HUE_STD_DEVIATION = 90
+
+# Maximum expected Laplacian variance for smoothness calculation
+# Higher values indicate rougher textures
+MAX_LAPLACIAN_VARIANCE = 5000
+
 
 def decode_base64_image(base64_str: str) -> np.ndarray:
     """Decode a base64 string to an OpenCV image."""
@@ -44,7 +52,7 @@ def analyze_coating(image: np.ndarray) -> Dict:
     # 2. Color uniformity analysis (standard deviation of hue)
     hue_channel = hsv[:, :, 0]
     hue_std = float(np.std(hue_channel))
-    color_uniformity = max(0, 1 - (hue_std / 90))  # Normalize to 0-1
+    color_uniformity = max(0, 1 - (hue_std / MAX_HUE_STD_DEVIATION))  # Normalize to 0-1
     
     # 3. Saturation analysis for coating presence
     saturation = hsv[:, :, 1]
@@ -63,7 +71,7 @@ def analyze_coating(image: np.ndarray) -> Dict:
     # 6. Surface smoothness (using Laplacian variance)
     laplacian = cv2.Laplacian(gray, cv2.CV_64F)
     laplacian_var = float(laplacian.var())
-    smoothness = max(0, 1 - (laplacian_var / 5000))  # Normalize
+    smoothness = max(0, 1 - (laplacian_var / MAX_LAPLACIAN_VARIANCE))  # Normalize
     
     # Calculate CVI (Coating Visual Index) - weighted combination
     cvi = (
@@ -78,6 +86,7 @@ def analyze_coating(image: np.ndarray) -> Dict:
         coverage * 0.35 +
         color_uniformity * 0.25 +
         smoothness * 0.25 +
+
         brightness_score * 0.15
     ) * 100
     
