@@ -4,7 +4,6 @@ import tempfile
 import os
 
 from core.coatvision_core import process_image_file, analyze_coating
-import cv2
 
 router = APIRouter(prefix="/api/analyze", tags=["analyze"])
 
