@@ -1,4 +1,4 @@
-# CoatVision MVP
+# CoatVision_MVP
 
 CoatVision is a coating analysis application with a FastAPI backend, React dashboard, and React Native mobile app.
 
