@@ -1,5 +1,8 @@
 version: '3.8'
 
+# Note: This file requires Docker Compose v2 for the depends_on condition syntax.
+# For Docker Compose v1, remove the 'condition: service_healthy' and use just 'depends_on: - backend'
+
 services:
   backend:
     build:
