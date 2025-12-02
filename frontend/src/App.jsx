@@ -8,6 +8,7 @@ import Jobs from "./pages/Jobs";
 import Agents from "./pages/Agents";
 import Reports from "./pages/Reports";
 import Logs from "./pages/Logs";
+import Status from "./pages/Status";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/agents" element={<Agents />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/logs" element={<Logs />} />
+        <Route path="/status" element={<Status />} />
       </Routes>
     </Layout>
   );

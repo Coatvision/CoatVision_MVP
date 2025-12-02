@@ -307,3 +307,56 @@ class TestLogsEndpoint:
         assert "total_logs_24h" in data
         assert "errors_24h" in data
         assert "by_endpoint" in data
+
+
+class TestStatusEndpoint:
+    """Test /api/status endpoints."""
+    
+    def test_system_status(self, client):
+        """Test comprehensive system status endpoint."""
+        response = client.get("/api/status/")
+        assert response.status_code == 200
+        data = response.json()
+        assert "system" in data
+        assert "overall_status" in data
+        assert "subsystems" in data
+        assert "endpoints" in data
+        # Check subsystems are present
+        subsystems = data["subsystems"]
+        assert "analyze" in subsystems
+        assert "wash" in subsystems
+        assert "lyxbot" in subsystems
+        assert "reports" in subsystems
+        assert "database" in subsystems
+    
+    def test_health_endpoint(self, client):
+        """Test simple health check endpoint."""
+        response = client.get("/api/status/health")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["status"] == "healthy"
+        assert "timestamp" in data
+    
+    def test_version_endpoint(self, client):
+        """Test version endpoint."""
+        response = client.get("/api/status/version")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["name"] == "CoatVision API"
+        assert "version" in data
+    
+    def test_subsystem_status_valid(self, client):
+        """Test getting status of a valid subsystem."""
+        response = client.get("/api/status/subsystem/analyze")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["subsystem"] == "analyze"
+        assert data["status"] == "healthy"
+    
+    def test_subsystem_status_invalid(self, client):
+        """Test getting status of an invalid subsystem."""
+        response = client.get("/api/status/subsystem/unknown")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["status"] == "unknown"
+        assert "available_subsystems" in data
