@@ -1,0 +1,3 @@
+[submodule "coatvision-app"]
+	path = coatvision-app
+	url = https://github.com/Coatvision/coatvision-app.git
