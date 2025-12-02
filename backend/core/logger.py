@@ -126,15 +126,20 @@ class APILogger:
         """Log error level message."""
         if details is None:
             details = {}
-        # Include traceback for errors
-        details["traceback"] = traceback.format_exc()
+        # Include traceback only if there's an active exception
+        exc_info = traceback.format_exc()
+        if exc_info and exc_info.strip() != "NoneType: None":
+            details["traceback"] = exc_info
         await self._log(LogLevel.ERROR, message, details, **kwargs)
     
     async def critical(self, message: str, details: Optional[Dict[str, Any]] = None, **kwargs):
         """Log critical level message."""
         if details is None:
             details = {}
-        details["traceback"] = traceback.format_exc()
+        # Include traceback only if there's an active exception
+        exc_info = traceback.format_exc()
+        if exc_info and exc_info.strip() != "NoneType: None":
+            details["traceback"] = exc_info
         await self._log(LogLevel.CRITICAL, message, details, **kwargs)
 
 

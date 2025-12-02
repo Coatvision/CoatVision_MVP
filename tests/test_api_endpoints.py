@@ -1,15 +1,17 @@
 """
 Tests for CoatVision API endpoints.
 """
-import sys
 import os
 import pytest
 import tempfile
 import numpy as np
 import base64
 
-# Add backend to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'backend'))
+# Set PYTHONPATH for proper imports
+import sys
+backend_path = os.path.join(os.path.dirname(__file__), '..', 'backend')
+if backend_path not in sys.path:
+    sys.path.insert(0, backend_path)
 
 from fastapi.testclient import TestClient
 

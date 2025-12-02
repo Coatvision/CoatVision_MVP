@@ -11,6 +11,7 @@ logger = create_api_logger("lyxbot")
 
 
 class LyxbotCommand(BaseModel):
+    """Model for LYXbot command requests."""
     command: str
     parameters: Optional[Dict[str, Any]] = None
 
@@ -38,11 +39,11 @@ async def lyxbot_status():
 
 
 @router.post("/command")
-async def lyxbot_command(payload: dict):
+async def lyxbot_command(command_data: LyxbotCommand):
     """Send a command to LYXbot agent."""
     request_id = str(uuid.uuid4())[:8]
-    command = payload.get("command", "").lower().strip()
-    parameters = payload.get("parameters", {})
+    command = command_data.command.lower().strip()
+    parameters = command_data.parameters or {}
     
     await logger.info(
         "LYXbot command received",
