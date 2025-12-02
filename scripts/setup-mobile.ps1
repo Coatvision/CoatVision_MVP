@@ -102,14 +102,28 @@ $envExample = Join-Path $MobileDir ".env.example"
 # Detect local IP for physical device testing
 function Get-LocalIP {
     try {
-        $ip = (Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias "Wi-Fi" -ErrorAction SilentlyContinue).IPAddress
-        if ($ip) { return $ip }
-        $ip = (Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias "Ethernet" -ErrorAction SilentlyContinue).IPAddress
-        if ($ip) { return $ip }
-        $ip = (Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike "127.*" -and $_.IPAddress -notlike "169.*" } | Select-Object -First 1).IPAddress
-        if ($ip) { return $ip }
+        # Try to get IP from any active network adapter
+        $addresses = Get-NetIPAddress -AddressFamily IPv4 -ErrorAction SilentlyContinue | 
+            Where-Object { 
+                $_.IPAddress -notlike "127.*" -and 
+                $_.IPAddress -notlike "169.*" -and 
+                $_.PrefixOrigin -ne "WellKnown"
+            }
+        if ($addresses) {
+            return ($addresses | Select-Object -First 1).IPAddress
+        }
     } catch {
-        return "localhost"
+        # Fallback method using .NET
+        try {
+            $hostname = [System.Net.Dns]::GetHostName()
+            $addresses = [System.Net.Dns]::GetHostAddresses($hostname) | 
+                Where-Object { $_.AddressFamily -eq "InterNetwork" -and $_.ToString() -notlike "127.*" }
+            if ($addresses) {
+                return $addresses[0].ToString()
+            }
+        } catch {
+            return "localhost"
+        }
     }
     return "localhost"
 }

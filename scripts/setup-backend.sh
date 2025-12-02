@@ -179,17 +179,21 @@ echo ""
 log_info "To start the server, run:"
 echo "    cd $BACKEND_DIR"
 echo "    source .venv/bin/activate"
-echo "    uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+echo "    # For development:"
+echo "    uvicorn main:app --host 127.0.0.1 --port 8000 --reload"
+echo "    # For production:"
+echo "    uvicorn main:app --host 0.0.0.0 --port 8000"
 echo ""
 
 # Ask if user wants to start the server now
 read -p "Do you want to start the server now? (y/n): " -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    log_info "Starting CoatVision Backend API..."
+    log_info "Starting CoatVision Backend API (development mode)..."
     log_info "Server will be available at: http://localhost:8000"
     log_info "API documentation at: http://localhost:8000/docs"
+    log_warning "Note: Using --reload for development. For production, omit --reload"
     log_info "Press Ctrl+C to stop the server"
     echo ""
-    uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    uvicorn main:app --host 127.0.0.1 --port 8000 --reload
 fi

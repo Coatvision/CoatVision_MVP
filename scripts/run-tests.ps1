@@ -275,9 +275,10 @@ function Run-IntegrationTests {
     # Test 2: API endpoints structure
     Run-Test "API endpoints structure" {
         $response = Invoke-TestRequest -Uri "$Url/"
-        return ($response.Content -match "endpoints") -and 
-               ($response.Content -match "analyze") -and 
-               ($response.Content -match "jobs")
+        $hasEndpoints = $response.Content -match "endpoints"
+        $hasAnalyze = $response.Content -match "analyze"
+        $hasJobs = $response.Content -match "jobs"
+        return ($hasEndpoints -and $hasAnalyze -and $hasJobs)
     }
     
     # Test 3: Response time check

@@ -194,7 +194,10 @@ Write-Host ""
 Write-Info "To start the server, run:"
 Write-Host "    cd $BackendDir"
 Write-Host "    .\.venv\Scripts\Activate.ps1"
-Write-Host "    uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+Write-Host "    # For development:"
+Write-Host "    uvicorn main:app --host 127.0.0.1 --port 8000 --reload"
+Write-Host "    # For production:"
+Write-Host "    uvicorn main:app --host 0.0.0.0 --port 8000"
 Write-Host ""
 
 # Ask if user wants to start the server now
@@ -206,10 +209,11 @@ if (-not $StartServer) {
 }
 
 if ($StartServer) {
-    Write-Info "Starting CoatVision Backend API..."
+    Write-Info "Starting CoatVision Backend API (development mode)..."
     Write-Info "Server will be available at: http://localhost:8000"
     Write-Info "API documentation at: http://localhost:8000/docs"
+    Write-Warning "Note: Using --reload for development. For production, omit --reload"
     Write-Info "Press Ctrl+C to stop the server"
     Write-Host ""
-    & uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    & uvicorn main:app --host 127.0.0.1 --port 8000 --reload
 }

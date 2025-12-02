@@ -99,7 +99,8 @@ ENV_EXAMPLE="$MOBILE_DIR/.env.example"
 # Detect local IP for physical device testing
 get_local_ip() {
     if command -v ip &> /dev/null; then
-        ip route get 1 | awk '{print $7; exit}' 2>/dev/null || echo "localhost"
+        # Use a common public IP to determine the local interface
+        ip route get 8.8.8.8 2>/dev/null | awk '{for(i=1;i<=NF;i++)if($i=="src"){print $(i+1);exit}}' || echo "localhost"
     elif command -v ifconfig &> /dev/null; then
         ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' | head -1 || echo "localhost"
     else
