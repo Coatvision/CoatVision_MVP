@@ -3,6 +3,5 @@ opencv-python>=4.8
 numpy>=1.24
 fastapi
 uvicorn[standard]
-numpy
 pydantic
 python-multipart
