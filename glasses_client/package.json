@@ -1,0 +1,9 @@
+{
+  "name": "glasses-client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Glasses client dev server would start here'",
+    "build": "echo 'Glasses client build would run here'"
+  }
+}

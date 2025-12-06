@@ -1,0 +1,9 @@
+{
+  "name": "lyxwash-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "lint": "echo 'LYXwash lint would run here'",
+    "tsc": "echo 'LYXwash typecheck would run here'"
+  }
+}

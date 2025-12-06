@@ -1,0 +1,9 @@
+{
+  "name": "lyxvision-pro-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "lint": "echo 'LYXvision Pro lint would run here'",
+    "tsc": "echo 'LYXvision Pro typecheck would run here'"
+  }
+}

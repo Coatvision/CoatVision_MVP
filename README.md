@@ -250,3 +250,80 @@ After setup, verify:
 ## License
 
 See LICENSE file for details.
+
+---
+
+## Lokal utvikling
+
+### Første gang (fra scratch)
+
+1. **Klon repository**
+   ```bash
+   git clone https://github.com/Coatvision/CoatVision_MVP.git
+   cd CoatVision_MVP
+   ```
+
+2. **Lag lokale `.env`-filer** (kopier fra `.env.example`)
+   ```bash
+   # Backend
+   cp backend/.env.example backend/.env
+   
+   # Admin portal (web)
+   cp admin_portal/.env.example admin_portal/.env
+   
+   # LYXvision Pro App (verksted)
+   cp lyxvision_pro_app/.env.example lyxvision_pro_app/.env
+   
+   # LYXwash (forbruker)
+   cp lyxwash_app/.env.example lyxwash_app/.env
+   
+   # Glasses client (AR)
+   cp glasses_client/.env.example glasses_client/.env
+   ```
+
+3. **Installer backend-avhengigheter**
+   ```bash
+   cd backend
+   python3 -m venv .venv
+   source .venv/bin/activate  # På Windows: .venv\Scripts\activate
+   pip install --upgrade pip
+   pip install -r requirements.txt
+   cd ..
+   ```
+
+4. **Start backend**
+   ```bash
+   cd backend
+   source .venv/bin/activate  # På Windows: .venv\Scripts\activate
+   uvicorn coatvision_core.app:app --reload --host 0.0.0.0 --port 8000
+   # Eller: uvicorn main:app --reload (avhengig av prosjektstruktur)
+   ```
+
+5. **Installer og start admin portal** (i ny terminal)
+   ```bash
+   cd admin_portal
+   npm install
+   npm run dev
+   ```
+
+6. **Installer og start glasses client** (i ny terminal, valgfritt)
+   ```bash
+   cd glasses_client
+   npm install
+   npm run dev
+   ```
+
+7. **Verifiser**
+   - Backend: [http://localhost:8000](http://localhost:8000)
+   - Admin Portal: [http://localhost:5173](http://localhost:5173) (eller port npm viser)
+   - Glasses Client: sjekk terminalen for port
+
+### Rask start med `scripts/dev.sh`
+
+Hvis du allerede har satt opp `.env`-filer og installert avhengigheter, kan du starte alle tjenestene samtidig:
+
+```bash
+./scripts/dev.sh
+```
+
+Dette starter backend, admin portal og glasses client i bakgrunnen. Trykk `Ctrl+C` for å stoppe alle tjenestene.
