@@ -25,12 +25,11 @@ jobs:
 
       - name: Init and verify submodules
         run: |
+          # Explicitly sync and update submodules (belt-and-suspenders approach)
           git submodule sync --recursive
           git submodule update --init --recursive
-          echo "Repository layout (top-level):"
+          echo "Repository layout:"
           ls -la
-          echo "Contents of repository root:"
-          ls -la .
           # If workflow will use admin_portal, verify it exists
           # This prevents the "working-directory: admin_portal" error
           if grep -q "working-directory.*admin_portal" .github/workflows/*.yml 2>/dev/null; then
