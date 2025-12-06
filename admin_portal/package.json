@@ -1,0 +1,10 @@
+{
+  "name": "admin-portal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Admin portal dev server would start here'",
+    "build": "echo 'Admin portal build would run here'",
+    "lint": "echo 'Admin portal lint would run here'"
+  }
+}
