@@ -58,7 +58,10 @@ if [ -d "frontend" ]; then
     echo "Installing Node dependencies..."
     if [ -f package-lock.json ]; then
         echo "Found package-lock.json — running npm ci"
-        npm ci || npm install
+        if ! npm ci; then
+            echo "Warning: npm ci failed, falling back to npm install"
+            npm install
+        fi
     else
         echo "No package-lock.json found — running npm install"
         npm install
@@ -85,7 +88,10 @@ if [ -d "mobile" ]; then
     echo "Installing Node dependencies..."
     if [ -f package-lock.json ]; then
         echo "Found package-lock.json — running npm ci"
-        npm ci || npm install
+        if ! npm ci; then
+            echo "Warning: npm ci failed, falling back to npm install"
+            npm install
+        fi
     else
         echo "No package-lock.json found — running npm install"
         npm install
@@ -104,5 +110,5 @@ echo ""
 echo "Press Ctrl+C to stop all services"
 
 # Wait for Ctrl+C
-trap "kill $BACKEND_PID $FRONTEND_PID 2>/dev/null; exit" INT
+trap "kill ${BACKEND_PID:-} ${FRONTEND_PID:-} 2>/dev/null; exit" INT
 wait
