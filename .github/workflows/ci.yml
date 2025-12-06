@@ -9,6 +9,8 @@ jobs:
   backend:
     name: Backend (FastAPI / CoatVision Core)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     defaults:
       run:
         working-directory: backend
@@ -35,6 +37,8 @@ jobs:
   admin_portal:
     name: Admin Portal (LYX-stil web)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     defaults:
       run:
         working-directory: admin_portal
@@ -80,6 +84,8 @@ jobs:
   lyxvision_pro:
     name: LYXvision Pro App
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     defaults:
       run:
         working-directory: lyxvision_pro_app
@@ -120,6 +126,8 @@ jobs:
   lyxwash:
     name: LYXwash App
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     defaults:
       run:
         working-directory: lyxwash_app
@@ -160,6 +168,8 @@ jobs:
   glasses_client:
     name: Glasses Client (Web / AR overlay)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     defaults:
       run:
         working-directory: glasses_client
