@@ -2,7 +2,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from typing import List, Dict, Optional, Any
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, timezone
 from collections import Counter
 import re
 import tempfile
@@ -125,7 +125,7 @@ def parse_log_file(file_content: str) -> LogAnalysisResult:
         error_frequencies=error_frequencies,
         error_trends=error_trends,
         top_errors=top_errors,
-        analyzed_at=datetime.now(datetime.UTC).isoformat() if hasattr(datetime, 'UTC') else datetime.utcnow().isoformat()
+        analyzed_at=datetime.now(timezone.utc).isoformat()
     )
 
 
