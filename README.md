@@ -171,8 +171,42 @@ CoatVision_MVP/
 │   └── README.md
 ├── tests/             # Test files
 ├── docker-compose.yml # Docker configuration
+├── AI_PLATFORM_STATUS.md         # AI platform investigation results
+├── OPENAI_INTEGRATION_GUIDE.md   # Guide for implementing OpenAI
+├── AI_FAQ.md                     # Quick answers to common AI questions
 └── README.md
 ```
+
+## AI Features
+
+### Current State
+
+CoatVision includes AI-ready infrastructure but requires configuration to enable full AI capabilities.
+
+**Available Documentation:**
+- **[AI_PLATFORM_STATUS.md](./AI_PLATFORM_STATUS.md)** - Current state of AI integration and platform status
+- **[OPENAI_INTEGRATION_GUIDE.md](./OPENAI_INTEGRATION_GUIDE.md)** - Step-by-step guide to integrate OpenAI
+- **[AI_FAQ.md](./AI_FAQ.md)** - Quick answers to common AI questions
+
+**Current Capabilities:**
+- ✅ **OpenCV Image Processing** - Basic edge detection and coating analysis
+- ⚠️ **OpenAI Ready** - Dependency installed, awaiting API key configuration
+- ⚠️ **LYXbot Agent** - Placeholder endpoints ready for AI integration
+
+**To Enable AI Features:**
+1. Set up OpenAI API key in `.env` file:
+   ```bash
+   OPENAI_API_KEY=sk-your-key-here
+   ```
+2. Follow the [OpenAI Integration Guide](./OPENAI_INTEGRATION_GUIDE.md)
+3. Restart backend service
+
+**LYXbot AI Assistant:**
+- Endpoint: `POST /api/lyxbot/command`
+- Status: `GET /api/lyxbot/status`
+- Provides conversational AI for coating analysis assistance
+
+For questions about the "Sparks" AI platform or any missing AI features, see [AI_PLATFORM_STATUS.md](./AI_PLATFORM_STATUS.md).
 
 ## Development
 
