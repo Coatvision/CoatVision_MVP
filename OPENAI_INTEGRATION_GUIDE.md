@@ -13,7 +13,7 @@ Create or update `.env` file in the repository root:
 ```bash
 # .env
 OPENAI_API_KEY=sk-your-api-key-here
-OPENAI_MODEL=gpt-4-vision-preview  # or gpt-4o for multimodal
+OPENAI_MODEL=gpt-4o  # or gpt-4o-mini for cost optimization
 ```
 
 Add to `.gitignore` if not already present:
@@ -44,7 +44,7 @@ class OpenAIService:
         if not api_key:
             raise ValueError("OPENAI_API_KEY environment variable not set")
         self.client = OpenAI(api_key=api_key)
-        self.model = os.getenv("OPENAI_MODEL", "gpt-4-vision-preview")
+        self.model = os.getenv("OPENAI_MODEL", "gpt-4o")
     
     def encode_image(self, image_path: Path) -> str:
         """Encode image to base64 for API."""
@@ -138,7 +138,7 @@ class OpenAIService:
         """
         try:
             response = self.client.chat.completions.create(
-                model=model or "gpt-4",
+                model=model or "gpt-4o",
                 messages=messages,
                 max_tokens=500
             )
@@ -339,7 +339,7 @@ def test_openai_service_initialization(mock_openai, monkeypatch):
     monkeypatch.setenv("OPENAI_API_KEY", "test-key")
     service = OpenAIService()
     assert service.client is not None
-    assert service.model == "gpt-4-vision-preview"
+    assert service.model == "gpt-4o"
 
 
 def test_openai_service_missing_key(monkeypatch):
@@ -422,11 +422,13 @@ curl http://localhost:8000/api/lyxbot/status
 
 ## Cost Considerations
 
-- **GPT-4 Vision:** ~$0.01-0.03 per image analysis
-- **GPT-4 Chat:** ~$0.03 per 1K tokens (input) + $0.06 per 1K tokens (output)
+- **GPT-4o:** $2.50 per 1M input tokens + $10.00 per 1M output tokens
+- **GPT-4o with Vision:** Additional image costs based on resolution
+- **GPT-4o-mini:** $0.15 per 1M input tokens + $0.60 per 1M output tokens (recommended for cost optimization)
+- Typical image analysis: ~$0.01-0.03 per image with GPT-4o
 - Monitor usage via OpenAI dashboard
 - Consider caching results for duplicate images
-- Use cheaper models (gpt-3.5-turbo) for simple queries
+- Use GPT-4o-mini for simple queries to reduce costs
 
 ## Security Best Practices
 

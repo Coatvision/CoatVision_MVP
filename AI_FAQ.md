@@ -30,7 +30,7 @@ Quick answers to common questions about AI capabilities in CoatVision.
 
 **Ready to Implement:**
 - ⚠️ OpenAI integration (dependency installed, needs API key)
-- ⚠️ GPT-4 Vision for image analysis
+- ⚠️ GPT-4o Vision for image analysis
 - ⚠️ LYXbot conversational AI
 
 **See:** [README.md - AI Features](./README.md#ai-features)
@@ -107,7 +107,7 @@ According to `.github/copilot-instructions.md`:
 > "The project uses OpenCV for image processing, OpenAI for AI capabilities, and generates PDF reports with ReportLab."
 
 **Intended Use:**
-- Image analysis with GPT-4 Vision
+- Image analysis with GPT-4o Vision
 - Coating quality assessment
 - Defect detection
 - Natural language recommendations
@@ -147,13 +147,14 @@ According to `.github/copilot-instructions.md`:
 ## How much does OpenAI cost?
 
 **Estimated Costs:**
-- **GPT-4 Vision:** $0.01-0.03 per image (varies by resolution)
-- **GPT-4 Chat:** $0.03/1K input tokens + $0.06/1K output tokens
-- **GPT-3.5 Turbo:** $0.001/1K input tokens + $0.002/1K output tokens
+- **GPT-4o:** $2.50 per 1M input tokens + $10.00 per 1M output tokens
+- **GPT-4o with Vision:** ~$0.01-0.03 per image (varies by resolution)
+- **GPT-4o-mini:** $0.15 per 1M input tokens + $0.60 per 1M output tokens
+- **GPT-4o-mini recommended** for cost optimization on simple tasks
 
 **Cost Optimization:**
 - Cache analysis results for duplicate images
-- Use GPT-3.5 for simple queries
+- Use GPT-4o-mini for simple queries
 - Implement request rate limiting
 - Monitor usage via OpenAI dashboard
 
