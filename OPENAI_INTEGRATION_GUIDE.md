@@ -29,6 +29,7 @@ Create `backend/app/services/openai_service.py`:
 
 ```python
 import os
+import threading
 from pathlib import Path
 from typing import Dict, Any, Optional
 import base64
@@ -207,7 +208,6 @@ class OpenAIService:
 
 
 # Singleton instance with thread safety
-import threading
 _openai_service = None
 _lock = threading.Lock()
 
