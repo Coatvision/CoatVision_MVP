@@ -173,6 +173,7 @@ CoatVision_MVP/
 ├── docker-compose.yml # Docker configuration
 ├── AI_PLATFORM_STATUS.md         # AI platform investigation results
 ├── OPENAI_INTEGRATION_GUIDE.md   # Guide for implementing OpenAI
+├── AI_FAQ.md                     # Quick answers to common AI questions
 └── README.md
 ```
 
@@ -185,6 +186,7 @@ CoatVision includes AI-ready infrastructure but requires configuration to enable
 **Available Documentation:**
 - **[AI_PLATFORM_STATUS.md](./AI_PLATFORM_STATUS.md)** - Current state of AI integration and platform status
 - **[OPENAI_INTEGRATION_GUIDE.md](./OPENAI_INTEGRATION_GUIDE.md)** - Step-by-step guide to integrate OpenAI
+- **[AI_FAQ.md](./AI_FAQ.md)** - Quick answers to common AI questions
 
 **Current Capabilities:**
 - ✅ **OpenCV Image Processing** - Basic edge detection and coating analysis

@@ -33,7 +33,7 @@ from pathlib import Path
 from typing import Dict, Any, Optional
 import base64
 
-from openai import OpenAI
+from openai import OpenAI, OpenAIError, RateLimitError, APIConnectionError
 
 
 class OpenAIService:
@@ -48,6 +48,17 @@ class OpenAIService:
     
     def encode_image(self, image_path: Path) -> str:
         """Encode image to base64 for API."""
+        if not image_path.exists():
+            raise FileNotFoundError(f"Image not found: {image_path}")
+        if not os.access(image_path, os.R_OK):
+            raise PermissionError(f"Image not readable: {image_path}")
+        
+        # Check file size (max 20MB for OpenAI API)
+        file_size = image_path.stat().st_size
+        max_size = 20 * 1024 * 1024  # 20MB
+        if file_size > max_size:
+            raise ValueError(f"Image too large: {file_size / 1024 / 1024:.1f}MB (max 20MB)")
+        
         with open(image_path, "rb") as image_file:
             return base64.b64encode(image_file.read()).decode("utf-8")
     
@@ -115,6 +126,24 @@ class OpenAIService:
                     "total_tokens": response.usage.total_tokens
                 }
             }
+        except RateLimitError as e:
+            return {
+                "success": False,
+                "error": "Rate limit exceeded. Please try again later.",
+                "error_type": "rate_limit"
+            }
+        except APIConnectionError as e:
+            return {
+                "success": False,
+                "error": "Failed to connect to OpenAI API. Check your internet connection.",
+                "error_type": "connection"
+            }
+        except OpenAIError as e:
+            return {
+                "success": False,
+                "error": f"OpenAI API error: {str(e)}",
+                "error_type": "api_error"
+            }
         except Exception as e:
             return {
                 "success": False,
@@ -152,6 +181,24 @@ class OpenAIService:
                     "total_tokens": response.usage.total_tokens
                 }
             }
+        except RateLimitError as e:
+            return {
+                "success": False,
+                "error": "Rate limit exceeded. Please try again later.",
+                "error_type": "rate_limit"
+            }
+        except APIConnectionError as e:
+            return {
+                "success": False,
+                "error": "Failed to connect to OpenAI API. Check your internet connection.",
+                "error_type": "connection"
+            }
+        except OpenAIError as e:
+            return {
+                "success": False,
+                "error": f"OpenAI API error: {str(e)}",
+                "error_type": "api_error"
+            }
         except Exception as e:
             return {
                 "success": False,
@@ -159,14 +206,19 @@ class OpenAIService:
             }
 
 
-# Singleton instance
+# Singleton instance with thread safety
+import threading
 _openai_service = None
+_lock = threading.Lock()
 
 def get_openai_service() -> OpenAIService:
-    """Get or create OpenAI service singleton."""
+    """Get or create OpenAI service singleton (thread-safe)."""
     global _openai_service
     if _openai_service is None:
-        _openai_service = OpenAIService()
+        with _lock:
+            # Double-check pattern
+            if _openai_service is None:
+                _openai_service = OpenAIService()
     return _openai_service
 ```
 
@@ -241,7 +293,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 import os
 
-from backend.app.services.openai_service import get_openai_service
+from app.services.openai_service import get_openai_service
 
 router = APIRouter(prefix="/api/lyxbot", tags=["lyxbot"])
 
@@ -325,12 +377,12 @@ import pytest
 from unittest.mock import Mock, patch
 from pathlib import Path
 
-from backend.app.services.openai_service import OpenAIService
+from app.services.openai_service import OpenAIService
 
 
 @pytest.fixture
 def mock_openai():
-    with patch('backend.app.services.openai_service.OpenAI') as mock:
+    with patch('openai.OpenAI') as mock:
         yield mock
 
 
@@ -455,15 +507,18 @@ curl http://localhost:8000/api/lyxbot/status
 - Verify model access in OpenAI account
 - Update to available model
 
-## Next Steps
+## Suggested Implementation Steps
 
-1. ✅ Set up OpenAI API key
-2. ✅ Create OpenAI service
-3. ✅ Update analyzer to use AI
-4. ✅ Enhance LYXbot with conversational AI
-5. ⬜ Add result caching
-6. ⬜ Implement usage tracking
-7. ⬜ Add cost monitoring dashboard
+**Basic Setup (Required):**
+- Set up OpenAI API key
+- Create OpenAI service module
+- Update analyzer to use AI
+- Enhance LYXbot with conversational AI
+
+**Advanced Features (Optional):**
+- Add result caching for duplicate images
+- Implement usage tracking and monitoring
+- Add cost monitoring dashboard
 
 ## Resources
 
