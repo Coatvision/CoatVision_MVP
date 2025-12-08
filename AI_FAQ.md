@@ -89,7 +89,7 @@ See [OPENAI_INTEGRATION_GUIDE.md - Update LYXbot Router](./OPENAI_INTEGRATION_GU
 
 **Yes!** The codebase can be adapted for:
 - **Anthropic Claude** - Similar API to OpenAI
-- **Google Gemini** - Multi-modal AI with vision
+- **Google Gemini** - multimodal AI with vision
 - **Azure OpenAI** - Enterprise OpenAI hosting
 - **Local Models** - Ollama, LM Studio, etc.
 
@@ -137,10 +137,10 @@ According to `.github/copilot-instructions.md`:
    - Check git history of other branches
 
 **Action Items:**
-- [ ] Search other repositories in organization
-- [ ] Check project planning documents
-- [ ] Review team communications
-- [ ] Contact original developer
+- Search other repositories in organization
+- Check project planning documents
+- Review team communications
+- Contact original developer
 
 ---
 
