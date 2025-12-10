@@ -1,0 +1,50 @@
+version: '3.8'
+
+# Note: This file requires Docker Compose v2 for the depends_on condition syntax.
+# For Docker Compose v1, remove the 'condition: service_healthy' and use just 'depends_on: - backend'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=false
+    volumes:
+      - ./backend/uploads:/app/uploads
+      - ./backend/outputs:/app/outputs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - coatvision-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      - VITE_API_URL=http://backend:8000
+    restart: unless-stopped
+    networks:
+      - coatvision-network
+
+networks:
+  coatvision-network:
+    driver: bridge
+
+volumes:
+  uploads:
+  outputs:

@@ -6,12 +6,9 @@ CoatVision is a coating analysis application with a FastAPI backend, React dashb
 
 ### Prerequisites
 
-- Python 3.10+ (3.11 recommended)
-- Node.js 18+ (Node 20 recommended)
-- Docker & Docker Compose (optional, for containerized deployment)
-- Git
-
-> Tip: Use pyenv and nvm to manage Python/Node versions across projects.
+- Python 3.9+
+- Node.js 18+
+- Docker (optional, for containerized deployment)
 
 ### Clone Repository
 
@@ -31,6 +28,16 @@ We provide automation scripts for setting up all components. See `scripts/README
 chmod +x scripts/*.sh
 
 # Set up backend
+./scripts/setup-backend.sh
+
+# Set up mobile app
+./scripts/setup-mobile.sh
+
+# Set up dashboard
+./scripts/setup-dashboard.sh
+
+# Run all tests
+./scripts/run-tests.sh
 ./scripts/setup-backend.sh setup
 
 # Set up mobile app
@@ -45,106 +52,35 @@ chmod +x scripts/*.sh
 
 #### Windows (PowerShell)
 
-Open PowerShell as Administrator on first run and (if needed) allow script execution:
-
 ```powershell
-# Only if you need to change execution policy (Administrator):
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+# Set up backend
+.\scripts\setup-backend.ps1
+
+# Set up mobile app
+.\scripts\setup-mobile.ps1
+
+# Set up dashboard
+.\scripts\setup-dashboard.ps1
+
+# Run all tests
+.\scripts\run-tests.ps1
 ```
 
-PowerShell instructions to create and activate the virtual environment and run scripts:
+### Docker Deployment
 
-```powershell
-# Create venv (from repository root)
-python -m venv .venv
-# Activate in PowerShell (Windows)
-.\.venv\Scripts\Activate.ps1
-
-# Install backend requirements (example)
-cd backend
-pip install -r requirements.txt
-
-# Return to repository root
-cd ..
-
-# Run setup scripts (PowerShell versions provided in scripts/)
-.\scripts\setup-backend.ps1 -Command setup
-.\scripts\setup-dashboard.ps1 -Command setup
-.\scripts\setup-mobile.ps1 -Command setup
-```
-
-If you prefer CMD instead of PowerShell, use:
-
-```cmd
-.venv\Scripts\activate.bat
-```
-
-### Docker Deployment (example)
-
-You can run all services with Docker Compose. Create a `.env` file in the repository root (example provided below) and optionally a `docker-compose.override.yml` to customize service settings for local development.
-
-Example .env:
-
-```env
-# .env (example)
-DATABASE_URL=sqlite:///./data/dev.db
-SECRET_KEY=your-secret-key
-API_PORT=8000
-FRONTEND_PORT=3000
-NODE_ENV=development
-EXPO_PUBLIC_API_URL=http://localhost:8000
-```
-
-Example `docker-compose.override.yml` for local development:
-
-```yaml
-version: '3.8'
-services:
-  backend:
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - SECRET_KEY=${SECRET_KEY}
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./backend:/app/backend
-  frontend:
-    environment:
-      - REACT_APP_API_URL=${EXPO_PUBLIC_API_URL}
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app/frontend
-```
-
-Start containers:
+Deploy all services with Docker:
 
 ```bash
-# Build and start
-docker compose build
-docker compose up -d
+# Linux/macOS
+./scripts/deploy-all.sh start
 
-# View logs
-docker compose logs -f
-
-# Stop
-docker compose down
+# Windows
+.\scripts\deploy-all.ps1 start
 ```
 
-If your system uses the older `docker-compose` command instead of `docker compose`, replace the command accordingly.
-
-### Environment variables
-
-Create a `.env` file at the repository root (example shown above). Common environment variables used across services:
-
-- DATABASE_URL - Connection string for your database (e.g. Postgres or SQLite)
-- SECRET_KEY - App secret used for signing tokens
-- API_PORT - Port for the backend API (default: 8000)
-- FRONTEND_PORT - Port for the frontend (default: 3000)
-- NODE_ENV - development/production
-- EXPO_PUBLIC_API_URL - Backend API URL consumed by mobile app
-
-Be careful not to commit secrets. Add `.env` to `.gitignore` if not already present.
+Services will be available at:
+- Backend API: http://localhost:8000
+- Frontend Dashboard: http://localhost:3000
 
 ## Project Structure
 
@@ -215,6 +151,10 @@ For questions about the "Sparks" AI platform or any missing AI features, see [AI
 ```bash
 cd backend
 python -m venv .venv
+source .venv/bin/activate  # Linux/macOS
+# .venv\Scripts\Activate.ps1  # Windows
+pip install -r requirements.txt
+uvicorn main:app --reload
 # macOS/Linux
 source .venv/bin/activate
 # Windows (PowerShell)
@@ -225,13 +165,9 @@ uvicorn main:app --reload --host 0.0.0.0 --port ${API_PORT:-8000}
 
 ### Frontend Development
 
-Use Node.js 18+ (or Node 20). You can use corepack to ensure package manager consistency (pnpm/yarn) or rely on npm.
-
 ```bash
 cd frontend
-# install dependencies
-npm ci
-# start dev server
+npm install
 npm run dev
 ```
 
@@ -253,6 +189,7 @@ Run tests using the test script:
 ./scripts/run-tests.sh quick    # Quick validation
 ```
 
+Or run directly with pytest:
 Or run backend tests directly with pytest:
 
 ```bash
@@ -260,17 +197,6 @@ cd backend
 source .venv/bin/activate
 pytest tests/ -v
 ```
-
-## Continuous Integration (GitHub Actions)
-
-This repository includes a basic CI workflow (`.github/workflows/ci.yml`) that:
-- Installs Python and Node
-- Installs dependencies for backend and frontend
-- Runs backend tests with pytest and frontend build/tests
-
-## Contributing
-
-See `CONTRIBUTING.md` for guidelines on how to contribute, run tests locally, and open pull requests.
 
 ## Verification Checklist
 
