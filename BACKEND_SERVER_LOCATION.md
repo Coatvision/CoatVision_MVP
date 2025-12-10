@@ -95,6 +95,49 @@ Once started, the server provides:
 - **Full repository:** [CoatVision_MVP](https://github.com/Coatvision/CoatVision_MVP)
 - **README:** [README.md](https://github.com/Coatvision/CoatVision_MVP/blob/main/README.md)
 
+## Verification
+
+The backend server command has been verified and tested:
+
+```bash
+cd backend
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+**Expected Output:**
+```
+INFO:     Started server process [XXXX]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+```
+
+**Test the server:**
+```bash
+# Root endpoint
+curl http://localhost:8000/
+
+# Health check
+curl http://localhost:8000/health
+```
+
+**Expected Response:**
+```json
+{
+    "status": "ok",
+    "name": "CoatVision API",
+    "version": "2.0.0",
+    "endpoints": {
+        "analyze": "/api/analyze",
+        "lyxbot": "/api/lyxbot",
+        "jobs": "/api/jobs",
+        "calibration": "/api/calibration",
+        "wash": "/api/wash",
+        "reports": "/api/report"
+    }
+}
+```
+
 ## Additional Resources
 
 For detailed setup instructions, see the main [README.md](https://github.com/Coatvision/CoatVision_MVP/blob/main/README.md) file in the repository root.
