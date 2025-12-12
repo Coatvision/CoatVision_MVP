@@ -2,6 +2,15 @@
 
 CoatVision is a coating analysis application with a FastAPI backend, React dashboard, and React Native mobile app.
 
+## 🚀 Deploy to Production
+
+**Ready to deploy?** See the deployment guides:
+- **[Quick Deploy Guide](./QUICK_DEPLOY.md)** - Fast deployment to Render
+- **[Full Deployment Guide](./DEPLOYMENT.md)** - Complete instructions (English)
+- **[Norwegian Guide](./DEPLOYMENT_NO.md)** - Norsk deployment guide
+- **[Deployment Checklist](./DEPLOYMENT_CHECKLIST.md)** - Step-by-step checklist
+- **[Architecture Overview](./ARCHITECTURE.md)** - System architecture diagrams
+
 ## Quick Start
 
 ### Prerequisites
@@ -171,8 +180,42 @@ CoatVision_MVP/
 │   └── README.md
 ├── tests/             # Test files
 ├── docker-compose.yml # Docker configuration
+├── AI_PLATFORM_STATUS.md         # AI platform investigation results
+├── OPENAI_INTEGRATION_GUIDE.md   # Guide for implementing OpenAI
+├── AI_FAQ.md                     # Quick answers to common AI questions
 └── README.md
 ```
+
+## AI Features
+
+### Current State
+
+CoatVision includes AI-ready infrastructure but requires configuration to enable full AI capabilities.
+
+**Available Documentation:**
+- **[AI_PLATFORM_STATUS.md](./AI_PLATFORM_STATUS.md)** - Current state of AI integration and platform status
+- **[OPENAI_INTEGRATION_GUIDE.md](./OPENAI_INTEGRATION_GUIDE.md)** - Step-by-step guide to integrate OpenAI
+- **[AI_FAQ.md](./AI_FAQ.md)** - Quick answers to common AI questions
+
+**Current Capabilities:**
+- ✅ **OpenCV Image Processing** - Basic edge detection and coating analysis
+- ⚠️ **OpenAI Ready** - Dependency installed, awaiting API key configuration
+- ⚠️ **LYXbot Agent** - Placeholder endpoints ready for AI integration
+
+**To Enable AI Features:**
+1. Set up OpenAI API key in `.env` file:
+   ```bash
+   OPENAI_API_KEY=sk-your-key-here
+   ```
+2. Follow the [OpenAI Integration Guide](./OPENAI_INTEGRATION_GUIDE.md)
+3. Restart backend service
+
+**LYXbot AI Assistant:**
+- Endpoint: `POST /api/lyxbot/command`
+- Status: `GET /api/lyxbot/status`
+- Provides conversational AI for coating analysis assistance
+
+For questions about the "Sparks" AI platform or any missing AI features, see [AI_PLATFORM_STATUS.md](./AI_PLATFORM_STATUS.md).
 
 ## Development
 
@@ -233,6 +276,42 @@ This repository includes a basic CI workflow (`.github/workflows/ci.yml`) that:
 - Installs Python and Node
 - Installs dependencies for backend and frontend
 - Runs backend tests with pytest and frontend build/tests
+
+## Deployment to Production
+
+### Deploy to Render (Recommended)
+
+CoatVision is ready for one-click deployment to Render:
+
+1. **Push to GitHub**: `git push origin main`
+2. **Go to Render Dashboard**: https://dashboard.render.com
+3. **Click "New +" → "Blueprint"**
+4. **Select your repository**: `Coatvision/CoatVision_MVP`
+5. **Click "Apply"** - Render deploys everything automatically!
+
+**What gets deployed:**
+- ✅ Backend API (FastAPI) - Python web service
+- ✅ Frontend Dashboard (React/Vite) - Static site
+- ❌ Mobile App - Deploy via Expo/App Stores separately
+
+**Deployment Documentation:**
+- [QUICK_DEPLOY.md](./QUICK_DEPLOY.md) - Quick start guide
+- [DEPLOYMENT.md](./DEPLOYMENT.md) - Complete deployment guide
+- [DEPLOYMENT_NO.md](./DEPLOYMENT_NO.md) - Norwegian guide
+- [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md) - Step-by-step checklist
+- [ARCHITECTURE.md](./ARCHITECTURE.md) - System architecture
+
+**Environment Variables:**
+After deployment, configure these in Render Dashboard:
+- `SECRET_KEY` - Auto-generated for JWT signing
+- `OPENAI_API_KEY` - Your OpenAI API key (optional)
+- `DATABASE_URL` - Database connection (optional, uses SQLite by default)
+
+### Alternative Deployment Options
+
+- **Docker**: Use the included `Dockerfile` and `docker-compose.yml`
+- **Other Platforms**: Use `Procfile` for Heroku-compatible platforms
+- **Manual**: Follow instructions in `DEPLOYMENT.md`
 
 ## Contributing
 
