@@ -2,6 +2,15 @@
 
 CoatVision is a coating analysis application with a FastAPI backend, React dashboard, and React Native mobile app.
 
+## 🚀 Deploy to Production
+
+**Ready to deploy?** See the deployment guides:
+- **[Quick Deploy Guide](./QUICK_DEPLOY.md)** - Fast deployment to Render
+- **[Full Deployment Guide](./DEPLOYMENT.md)** - Complete instructions (English)
+- **[Norwegian Guide](./DEPLOYMENT_NO.md)** - Norsk deployment guide
+- **[Deployment Checklist](./DEPLOYMENT_CHECKLIST.md)** - Step-by-step checklist
+- **[Architecture Overview](./ARCHITECTURE.md)** - System architecture diagrams
+
 ## Quick Start
 
 ### Prerequisites
@@ -267,6 +276,42 @@ This repository includes a basic CI workflow (`.github/workflows/ci.yml`) that:
 - Installs Python and Node
 - Installs dependencies for backend and frontend
 - Runs backend tests with pytest and frontend build/tests
+
+## Deployment to Production
+
+### Deploy to Render (Recommended)
+
+CoatVision is ready for one-click deployment to Render:
+
+1. **Push to GitHub**: `git push origin main`
+2. **Go to Render Dashboard**: https://dashboard.render.com
+3. **Click "New +" → "Blueprint"**
+4. **Select your repository**: `Coatvision/CoatVision_MVP`
+5. **Click "Apply"** - Render deploys everything automatically!
+
+**What gets deployed:**
+- ✅ Backend API (FastAPI) - Python web service
+- ✅ Frontend Dashboard (React/Vite) - Static site
+- ❌ Mobile App - Deploy via Expo/App Stores separately
+
+**Deployment Documentation:**
+- [QUICK_DEPLOY.md](./QUICK_DEPLOY.md) - Quick start guide
+- [DEPLOYMENT.md](./DEPLOYMENT.md) - Complete deployment guide
+- [DEPLOYMENT_NO.md](./DEPLOYMENT_NO.md) - Norwegian guide
+- [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md) - Step-by-step checklist
+- [ARCHITECTURE.md](./ARCHITECTURE.md) - System architecture
+
+**Environment Variables:**
+After deployment, configure these in Render Dashboard:
+- `SECRET_KEY` - Auto-generated for JWT signing
+- `OPENAI_API_KEY` - Your OpenAI API key (optional)
+- `DATABASE_URL` - Database connection (optional, uses SQLite by default)
+
+### Alternative Deployment Options
+
+- **Docker**: Use the included `Dockerfile` and `docker-compose.yml`
+- **Other Platforms**: Use `Procfile` for Heroku-compatible platforms
+- **Manual**: Follow instructions in `DEPLOYMENT.md`
 
 ## Contributing
 
