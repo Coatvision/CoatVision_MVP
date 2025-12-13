@@ -317,6 +317,46 @@ After deployment, configure these in Render Dashboard:
 
 See `CONTRIBUTING.md` for guidelines on how to contribute, run tests locally, and open pull requests.
 
+## Lokal utvikling
+
+For å komme i gang med lokal utvikling første gang:
+
+```bash
+# 1. Kopier environment-eksempler (hvis de finnes)
+cp backend/.env.example backend/.env 2>/dev/null || true
+cp frontend/.env.example frontend/.env 2>/dev/null || true
+cp mobile/.env.example mobile/.env 2>/dev/null || true
+
+# 2. Installer Python-avhengigheter
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate  # På Windows: .venv\Scripts\activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+# 3. Start backend
+uvicorn main:app --reload --host 0.0.0.0 --port 8000 &
+
+# 4. Installer og start frontend (i ny terminal)
+cd ../frontend
+if [ -f package-lock.json ]; then npm ci; else npm install; fi
+npm start &
+
+# 5. Installer og start mobile (i ny terminal)
+cd ../mobile
+if [ -f package-lock.json ]; then npm ci; else npm install; fi
+npm start
+```
+
+Alternativt kan du bruke det automatiske utviklingsskriptet:
+
+```bash
+chmod +x scripts/dev.sh
+./scripts/dev.sh
+```
+
+Dette skriptet setter opp alle tjenester og kopierer `.env.example`-filer automatisk.
+
 ## Verification Checklist
 
 After setup, verify:
