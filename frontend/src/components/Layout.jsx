@@ -20,6 +20,7 @@ export default function Layout({ children }) {
         <Link to="/jobs" style={linkStyle}>Jobber</Link>
         <Link to="/agents" style={linkStyle}>Agenter</Link>
         <Link to="/reports" style={linkStyle}>Rapporter</Link>
+        <Link to="/logs" style={linkStyle}>Logs</Link>
       </nav>
 
       {/* Main content */}
