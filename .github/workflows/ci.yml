@@ -52,6 +52,8 @@ jobs:
       - name: Install mobile dependencies
         working-directory: mobile
         run: |
+          # Use npm ci for faster, more reliable installs when lockfile exists
+          # Fall back to npm install for resilience if lockfile is missing
           if [ -f package-lock.json ]; then
             npm ci
           else
