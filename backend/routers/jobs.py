@@ -2,7 +2,7 @@
 from fastapi import APIRouter
 from typing import List, Optional
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, timezone
 
 router = APIRouter(prefix="/api/jobs", tags=["jobs"])
 
@@ -28,9 +28,9 @@ async def list_jobs():
 @router.post("/")
 async def create_job(job: Job):
     """Create a new job."""
-    job_dict = job.dict()
+    job_dict = job.model_dump()
     job_dict["id"] = f"job_{len(jobs_db) + 1}"
-    job_dict["created_at"] = datetime.utcnow().isoformat()
+    job_dict["created_at"] = datetime.now(timezone.utc).isoformat()
     jobs_db.append(job_dict)
     return {"status": "created", "job": job_dict}
 
