@@ -52,7 +52,11 @@ jobs:
       - name: Install mobile dependencies
         working-directory: mobile
         run: |
-          npm ci
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
 
       - name: Run mobile build (and tests if present)
         working-directory: mobile
