@@ -4,7 +4,8 @@
     { "src": "coatvision-app/package.json", "use": "@vercel/static-build" }
   ],
   "env": {
-    "VITE_BACKEND_URL": ""
+    "VITE_BACKEND_URL": "",
+    "VITE_COATVISION_USE_REMOTE": "1"
   },
   "buildCommand": "npm ci --prefix coatvision-app && npm run build --prefix coatvision-app",
   "outputDirectory": "coatvision-app/dist"
