@@ -91,6 +91,14 @@ _include_optional_router("backend.app.routers.wash")
 _include_optional_router("backend.app.routers.reports")
 _include_optional_router("backend.app.routers.coatvision_v1")
 
+# Explicitly include v1 router to ensure availability even if safe import skipped
+try:
+    from backend.app.routers.coatvision_v1 import router as _coatvision_v1_router
+    app.include_router(_coatvision_v1_router)
+    print("[routers] Included explicit: backend.app.routers.coatvision_v1")
+except Exception as _e:
+    print(f"[routers] Explicit include failed for coatvision_v1: {_e}")
+
 # Serve statiske analyse-resultater (overlays) fra outputs/
 try:
     try:
