@@ -91,6 +91,16 @@ _include_optional_router("backend.app.routers.wash")
 _include_optional_router("backend.app.routers.reports")
 _include_optional_router("backend.app.routers.coatvision_v1")
 
+# Debug: confirm route registration for v1 endpoints (helps diagnose 404s during dev)
+try:
+    _paths = {getattr(r, 'path', None) for r in app.routes}
+    if "/v1/coatvision/analyze-image" in _paths and "/v1/coatvision/analyze-live" in _paths:
+        print("[routes] v1 endpoints registered")
+    else:
+        print("[routes] v1 endpoints missing from app.routes ->", sorted([p for p in _paths if p]))
+except Exception:
+    pass
+
 # Serve statiske analyse-resultater (overlays) fra outputs/
 try:
     try:

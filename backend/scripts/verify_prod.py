@@ -16,6 +16,7 @@ Checks:
 """
 
 BASE64_FAKE_IMAGE = "ZmFrZV9iYXNlNjQ="
+TEST_IMAGE_URL = "https://picsum.photos/256"
 
 
 def main():
@@ -42,10 +43,15 @@ def main():
     r = requests.get(url('/openapi.json'), timeout=15)
     print('GET /openapi.json ->', r.status_code)
 
-    # Analyze image (v1)
-    payload = {"frame_base64": BASE64_FAKE_IMAGE}
+    # Analyze image (v1) using a simple public test image URL
+    payload = {"image": {"imageUrl": TEST_IMAGE_URL}}
     r = requests.post(url('/v1/coatvision/analyze-image'), json=payload, timeout=30)
     print('POST /v1/coatvision/analyze-image ->', r.status_code, str(r.text)[:200])
+
+    # Analyze live (v1) with a tiny fake base64 payload (expected to 400 if not a real JPEG)
+    payload_live = {"frame": {"frameBase64": BASE64_FAKE_IMAGE}}
+    r_live = requests.post(url('/v1/coatvision/analyze-live'), json=payload_live, timeout=30)
+    print('POST /v1/coatvision/analyze-live ->', r_live.status_code, str(r_live.text)[:200])
 
     # Admin-protected example (if token is provided, just demonstrate header usage)
     if admin_token:
