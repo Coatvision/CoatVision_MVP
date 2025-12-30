@@ -112,5 +112,16 @@ try:
     except Exception:
         # Ikke fatal i utvikling hvis mappe mangler eller annen feil
         pass
+        try:
+            from .services.config import BACKEND_DIR
+            outputs_dir = (BACKEND_DIR / "outputs").resolve()
+            outputs_dir.mkdir(parents=True, exist_ok=True)
+            app.mount("/outputs", StaticFiles(directory=str(outputs_dir), check_dir=False), name="outputs")
+        except ImportError:
+            # Module not found, skip mounting outputs
+            print("[warning] backend.app.services.config could not be imported; skipping /outputs mount.")
+        except Exception:
+            # Ikke fatal i utvikling hvis mappe mangler eller annen feil
+            pass
 except Exception:
     pass

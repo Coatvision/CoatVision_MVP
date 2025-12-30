@@ -8,9 +8,15 @@ except Exception:
     OpenAI = None
 
 try:
-    from app.services.config import OPENAI_API_KEY
-except ImportError:
-    OPENAI_API_KEY = None
+    # Prefer package-relative imports
+    from .config import OPENAI_API_KEY, OPENAI_MODEL
+except Exception:
+    try:
+        # Fallback to absolute import if needed
+        from backend.app.services.config import OPENAI_API_KEY, OPENAI_MODEL
+    except Exception:
+        OPENAI_API_KEY = None
+        OPENAI_MODEL = "gpt-4.1-mini"
 
 _client: Any = None
 
@@ -61,7 +67,7 @@ async def analyze_live_frame(frame_base64: str) -> Dict[str, Any]:
         }
 
     response = client.chat.completions.create(
-        model="gpt-4.1-mini",  # kan byttes til kraftigere modell senere
+        model=OPENAI_MODEL,
         messages=[
             {"role": "system", "content": system_prompt},
             {
