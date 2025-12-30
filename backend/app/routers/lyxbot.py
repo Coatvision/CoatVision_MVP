@@ -1,5 +1,6 @@
 # backend/app/routers/lyxbot.py
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from backend.app.security import admin_guard
 
 router = APIRouter(prefix="/api/lyxbot", tags=["lyxbot"])
 
@@ -10,7 +11,7 @@ async def lyxbot_status():
 
 
 @router.post("/command")
-async def lyxbot_command(payload: dict):
+async def lyxbot_command(payload: dict, _=Depends(admin_guard)):
     command = payload.get("command", "")
     return {
         "status": "received",

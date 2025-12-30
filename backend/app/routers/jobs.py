@@ -1,5 +1,6 @@
 # backend/app/routers/jobs.py
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from backend.app.security import admin_guard
 from typing import List, Optional
 from pydantic import BaseModel
 from datetime import datetime
@@ -24,7 +25,7 @@ async def list_jobs():
 
 
 @router.post("/")
-async def create_job(job: Job):
+async def create_job(job: Job, _=Depends(admin_guard)):
     job_dict = job.dict()
     job_dict["id"] = f"job_{len(jobs_db) + 1}"
     job_dict["created_at"] = datetime.utcnow().isoformat()

@@ -1,5 +1,6 @@
 # backend/app/routers/calibration.py
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from backend.app.security import admin_guard
 
 router = APIRouter(prefix="/api/calibration", tags=["calibration"])
 
@@ -15,7 +16,7 @@ async def calibration_status():
 
 
 @router.post("/run")
-async def run_calibration():
+async def run_calibration(_=Depends(admin_guard)):
     return {
         "status": "started",
         "message": "Calibration process initiated",
