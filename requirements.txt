@@ -13,3 +13,5 @@ Pillow
 alembic
 reportlab>=4.0
 requests>=2.31
+psycopg2-binary
+psycopg2-binary
