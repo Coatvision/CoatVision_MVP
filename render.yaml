@@ -14,7 +14,7 @@ services:
       - key: DATABASE_URL
         sync: false
       - key: COATVISION_CORS_ORIGINS
-        sync: false
+        value: "*"
       - key: PERSIST_BASE
         value: ./local_data
       - key: PYTHON_VERSION

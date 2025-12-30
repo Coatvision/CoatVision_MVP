@@ -22,14 +22,7 @@ except Exception:
     pass
 
 # Allow CORS for admin dashboard and mobile clients during MVP.
-_raw_origins = os.getenv(
-    "COATVISION_CORS_ORIGINS",
-    "http://localhost:5173,http://127.0.0.1:5173,"
-    "http://localhost:5174,http://127.0.0.1:5174,"
-    "http://localhost:19001,http://127.0.0.1:19001,"
-    "exp://127.0.0.1:19000,exp://192.168.0.0:19000,"
-    "https://coatvision-mvp.onrender.com,https://www.yourdomain.no"
-)
+_raw_origins = os.getenv("COATVISION_CORS_ORIGINS", "")
 _allowed_origins = [origin.strip() for origin in _raw_origins.split(",") if origin.strip()]
 
 app.add_middleware(
