@@ -53,7 +53,10 @@ coatvision-app/.env*
 **/dist/
 
 # Nested repo accidentally added
+# Ignore nested repo folder, but allow a specific doc inside
 CoatVision_MVP/
+!CoatVision_MVP/
+CoatVision_MVP/*
 !CoatVision_MVP/DEPLOYMENT_CHECKLIST.md
 
 # Misc stray files
