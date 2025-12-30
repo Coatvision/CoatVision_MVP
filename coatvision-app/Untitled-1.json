@@ -1,0 +1,11 @@
+{
+  "cli": { "version": ">= 16.0.0" },
+  "build": {
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://coatvision-backend.onrender.com"
+      }
+    }
+  },
+  "submit": { "production": { "android": {}, "ios": {} } }
+}

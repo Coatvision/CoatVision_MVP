@@ -89,6 +89,7 @@ _include_optional_router("backend.app.routers.calibration")
 _include_optional_router("backend.app.routers.jobs")
 _include_optional_router("backend.app.routers.wash")
 _include_optional_router("backend.app.routers.reports")
+_include_optional_router("backend.app.routers.coatvision_v1")
 
 # Serve statiske analyse-resultater (overlays) fra outputs/
 try:

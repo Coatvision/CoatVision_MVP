@@ -1,0 +1,81 @@
+{
+  "expo": {
+    "name": "LYXvision Pro",
+    "slug": "lyxvision-pro",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*",
+      "assets/help/*"
+    ],
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "lyxvision",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lyxvisionsorganization.lyxvision",
+      "buildNumber": "1",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "infoPlist": {
+        "NSCameraUsageDescription": "LYXvision needs camera access to analyze vehicle surfaces and coating quality.",
+        "NSPhotoLibraryUsageDescription": "LYXvision needs photo library access to save analysis reports and before/after images.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.lyxvisionsorganization.lyxvision",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.coatvision.lyxvision"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "apiUrl": "https://coatvision-backend.onrender.com",
+      "apiKey": "demo-key-12345",
+      "eas": {
+        "projectId": "3e9c9d3f-b9d5-4ce6-84da-becf49993ae8"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "description": "LYXvision Quality Index - Professional automotive coating quality measurement system with AI-powered analysis, CVI/CQI scoring, and real-time damage control assessment.",
+    "primaryColor": "#E6F4FE",
+    "githubUrl": "https://github.com/Coatvision/CoatVision_MVP",
+    "locales": {
+      "en": {
+        "name": "LYXvision Pro",
+        "description": "Professional automotive coating quality measurement with AI-powered analysis"
+      }
+    },
+    "owner": "lyxvision"
+  }
+}

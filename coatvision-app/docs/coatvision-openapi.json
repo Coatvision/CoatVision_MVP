@@ -1,0 +1,346 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "LYXvision / CoatVision API",
+    "version": "1.0.0",
+    "description": "HTTP API for CoatVision analysis used by the LYXvision mobile app."
+  },
+  "paths": {
+    "/v1/coatvision/analyze-image": {
+      "post": {
+        "summary": "Analyze a still image of a vehicle panel",
+        "operationId": "analyzeImage",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImageAnalysisRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful analysis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/coatvision/analyze-live": {
+      "post": {
+        "summary": "Analyze a single frame from live camera",
+        "operationId": "analyzeLive",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LiveAnalysisRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful analysis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CoatVisionMode": {
+        "type": "string",
+        "enum": [
+          "image",
+          "live"
+        ],
+        "description": "Analysis mode used by CoatVision."
+      },
+      "ImagePayload": {
+        "type": "object",
+        "description": "Image data sent from the client. At least one of imageUrl or imageBase64 must be provided.",
+        "properties": {
+          "imageUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Publicly accessible URL to the image to analyze (e.g. from object storage)."
+          },
+          "imageBase64": {
+            "type": "string",
+            "description": "Base64-encoded image bytes (without data: prefix)."
+          },
+          "imageFormat": {
+            "type": "string",
+            "description": "Optional hint about the image format, e.g. 'jpeg', 'png'."
+          }
+        },
+        "anyOf": [
+          {
+            "required": [
+              "imageUrl"
+            ]
+          },
+          {
+            "required": [
+              "imageBase64"
+            ]
+          }
+        ]
+      },
+      "ClientContext": {
+        "type": "object",
+        "description": "Optional metadata about the client/device/job.",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "description": "ID of the job/order in the workshop system, if any."
+          },
+          "vehiclePlate": {
+            "type": "string",
+            "description": "Registration plate of the vehicle, if known."
+          },
+          "vehicleMake": {
+            "type": "string"
+          },
+          "vehicleModel": {
+            "type": "string"
+          },
+          "vehicleColor": {
+            "type": "string"
+          },
+          "panelHint": {
+            "type": "string",
+            "description": "Human-readable hint like 'right front door', 'hood', etc."
+          },
+          "appVersion": {
+            "type": "string",
+            "description": "Version of the LYXvision app."
+          },
+          "deviceModel": {
+            "type": "string",
+            "description": "Client device model (optional)."
+          }
+        },
+        "additionalProperties": false
+      },
+      "ImageAnalysisRequest": {
+        "type": "object",
+        "required": [
+          "mode",
+          "image"
+        ],
+        "properties": {
+          "mode": {
+            "$ref": "#/components/schemas/CoatVisionMode"
+          },
+          "image": {
+            "$ref": "#/components/schemas/ImagePayload"
+          },
+          "context": {
+            "$ref": "#/components/schemas/ClientContext"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LiveFramePayload": {
+        "type": "object",
+        "description": "Frame data sent from a live camera feed.",
+        "properties": {
+          "frameBase64": {
+            "type": "string",
+            "description": "Base64-encoded image bytes for a single frame."
+          },
+          "frameFormat": {
+            "type": "string",
+            "description": "Format of the frame image, e.g. 'jpeg'."
+          },
+          "sequenceIndex": {
+            "type": "integer",
+            "description": "Optional index of the frame in the live sequence."
+          }
+        },
+        "required": [
+          "frameBase64"
+        ]
+      },
+      "LiveAnalysisRequest": {
+        "type": "object",
+        "required": [
+          "mode",
+          "frame"
+        ],
+        "properties": {
+          "mode": {
+            "$ref": "#/components/schemas/CoatVisionMode"
+          },
+          "frame": {
+            "$ref": "#/components/schemas/LiveFramePayload"
+          },
+          "context": {
+            "$ref": "#/components/schemas/ClientContext"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CoatVisionResult": {
+        "type": "object",
+        "required": [
+          "coverage",
+          "missingAreas",
+          "warnings",
+          "notes"
+        ],
+        "properties": {
+          "coverage": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Estimated coating coverage in percent (0–100)."
+          },
+          "missingAreas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of human-readable descriptions of areas that may have missing/weak coverage."
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "General warnings or cautions for this analysis."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Longer free-text explanation of the result."
+          },
+          "heatmapUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional URL to a heatmap/overlay image generated by the server."
+          },
+          "maskUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional URL to a segmentation mask image."
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Optional overall confidence score between 0 and 1."
+          }
+        },
+        "additionalProperties": false
+      },
+      "AnalysisResponse": {
+        "type": "object",
+        "required": [
+          "id",
+          "mode",
+          "createdAt",
+          "result"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Server-side ID of this analysis."
+          },
+          "mode": {
+            "$ref": "#/components/schemas/CoatVisionMode"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp when the analysis was created."
+          },
+          "result": {
+            "$ref": "#/components/schemas/CoatVisionResult"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": [
+          "error",
+          "message"
+        ],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Short error code, e.g. 'bad_request' or 'internal_error'."
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error description."
+          },
+          "details": {
+            "type": "object",
+            "description": "Optional machine-readable error details.",
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

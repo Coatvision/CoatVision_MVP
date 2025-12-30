@@ -1,0 +1,53 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch chore/upgrade-sdk-54
+# Changes to be committed:
+#	modified:   app/live.tsx
+#
+# Changes not staged for commit:
+#	modified:   app.json
+#	modified:   app/(internal)/index.tsx
+#	modified:   app/(tabs)/_layout.tsx
+#	modified:   app/(tabs)/analyze.tsx
+#	modified:   app/(tabs)/index.tsx
+#	modified:   app/analyze.tsx
+#	modified:   app/history/[id].tsx
+#	modified:   app/history/index.tsx
+#	modified:   app/live.tsx
+#	modified:   package-lock.json
+#	modified:   package.json
+#	modified:   src/config/api/coatvision-types.ts
+#	modified:   src/config/api/coatvision.ts
+#	modified:   src/config/flags.ts
+#	modified:   tsconfig.json
+#	modified:   tsconfig.root.json
+#
+# Untracked files:
+#	.venv/
+#	APP_STORE_GUIDE.md
+#	App.tsx
+#	app.config.js
+#	app/(tabs)/lyxbot.tsx
+#	app/(tabs)/partners.tsx
+#	app/LYXbot.tsx
+#	app/api.ts
+#	app/config.ts
+#	app/history.tsx
+#	app/jobs/
+#	app/login.tsx
+#	app/profile.tsx
+#	app/render.yaml
+#	components/LyxbotIntro.tsx
+#	components/coatvision-app/
+#	eas.json
+#	global.d.ts
+#	history.tsx
+#	lib/
+#	routers/
+#	src/config/api/calibration-demo.ts
+#	src/config/storage/jobs.ts
+#	src/core/
+#	src/services/
+#
