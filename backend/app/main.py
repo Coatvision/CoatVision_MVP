@@ -92,6 +92,10 @@ _include_optional_router("backend.app.routers.auth")
 _include_optional_router("backend.app.routers.config", attr_name="router")
 _include_optional_router("backend.app.routers.diagnostics")
 _include_optional_router("backend.app.routers.config_model")
+_include_optional_router("backend.app.routers.calibration")
+_include_optional_router("backend.app.routers.jobs")
+_include_optional_router("backend.app.routers.wash")
+_include_optional_router("backend.app.routers.reports")
 
 # Serve statiske analyse-resultater (overlays) fra outputs/
 try:
