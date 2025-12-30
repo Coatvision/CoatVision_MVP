@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "coatvision-app/package.json", "use": "@vercel/static-build" }
+  ],
+  "env": {
+    "VITE_BACKEND_URL": ""
+  },
+  "buildCommand": "npm ci --prefix coatvision-app && npm run build --prefix coatvision-app",
+  "outputDirectory": "coatvision-app/dist"
+}
