@@ -12,6 +12,11 @@ RequestLoggingMiddleware = None  # Middleware import skipped: module not found
 
 # Opprett FastAPI-app her (ikke importer fra ikke-eksisterende modul)
 app = FastAPI(title="CoatVision Core")
+# Debug: show which main.py is being executed
+try:
+    print(f"[app] main.py loaded from: {__file__}")
+except Exception:
+    pass
 # Sørg for at tabellene finnes (bruker coatvision.db fra .env)
 Base.metadata.create_all(bind=engine)
 # Også opprett SQLModel-tabeller (CalibrationEvent, CalibrationWeightsProfile)
