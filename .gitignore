@@ -54,6 +54,7 @@ coatvision-app/.env*
 
 # Nested repo accidentally added
 CoatVision_MVP/
+!CoatVision_MVP/DEPLOYMENT_CHECKLIST.md
 
 # Misc stray files
 tore*
