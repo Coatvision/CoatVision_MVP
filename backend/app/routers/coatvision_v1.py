@@ -4,11 +4,7 @@ import tempfile
 import os
 from typing import Optional, Dict, Any
 
-from backend.app.core.coatvision_core import (
-    process_image_file,
-    analyze_coating,
-    decode_base64_image,
-)
+# Avoid importing heavy dependencies at module load; import lazily inside handlers
 
 router = APIRouter(prefix="/v1/coatvision", tags=["coatvision-v1"])
 
@@ -32,6 +28,7 @@ async def analyze_image(payload: Dict[str, Any]):
     try:
         # Last ned bildet til temp og kjør eksisterende pipeline
         import requests
+        from backend.app.core.coatvision_core import process_image_file
         with tempfile.TemporaryDirectory() as tmp:
             filename = os.path.join(tmp, "remote_image.jpg")
             resp = requests.get(image_url, timeout=15)
@@ -53,6 +50,7 @@ async def analyze_live(payload: Dict[str, Any]):
         raise HTTPException(status_code=400, detail="Missing frame.frameBase64")
 
     try:
+        from backend.app.core.coatvision_core import decode_base64_image, analyze_coating
         img = decode_base64_image(frame_b64)
         metrics = analyze_coating(img)
         return _result_payload(metrics, mode="live")
