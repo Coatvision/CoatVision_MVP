@@ -1,0 +1,1 @@
+approxSize = (info.exists && 'size' in info) ? info.size : 0;

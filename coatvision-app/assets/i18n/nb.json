@@ -1,0 +1,10 @@
+﻿{
+  "help.title": "Visuell forklaring av CoatVision",
+  "help.subtitle": "Intern / Konfidensiell — dd.mm.yyyy — v0.1",
+  "help.sections.welcome": "Velkommen til CoatVision",
+  "help.sections.account": "Opprett konto og gi nødvendige tillatelser",
+  "help.sections.pair": "Koble til CoatVision-brille",
+  "help.sections.project": "Nytt prosjekt og 3D/panelvalg",
+  "help.sections.analysis": "Live analyse med fargekoder",
+  "help.sections.summary": "Oppsummering og eksport av rapport"
+}

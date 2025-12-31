@@ -1,0 +1,35 @@
+FREMSKAFFELSESBEVIS / METODEBESKRIVELSE
+
+Oppfinner: Connie Johansen Laudal
+Prosjekt: CoatVision
+Dato: 09.11.2025
+
+Jeg bekrefter herved at jeg er oppfinner og utvikler av konseptet og systemet kjent som "CoatVision", 
+som består av en digital løsning for analyse og visualisering av påføring av coating på overflater.
+
+Prosessen for utviklingen ble gjennomført som følger:
+
+1. Opprettelse av prosjektmappe "CoatVision_MVP" i Visual Studio Code med React Native (Expo).
+2. Utvikling av brukergrensesnittet i filene:
+   - app/(tabs)/analyze.tsx
+   - app/(tabs)/_layout.tsx
+   - app/_app.tsx
+3. Oppstart av prosjektet med kommandoen:
+   npx expo start -c
+4. Testing og kjøring av applikasjonen i Expo Go (mobil og web).
+5. Generering av dokumentasjonsfiler og PDF-er via rapportskript for:
+   - Teknisk beskrivelse (technical_description)
+   - Oppfinnelsesbeskrivelse (Oppfinnelsesbeskrivelse_CoatVision.pdf)
+   - Oppfinnererklæring
+   - README og systemoversikt
+6. Alle filer ble samlet i mappen CoatVision_Full_Patent_Package.zip for arkivering og bevis på opphav.
+
+Prosjektet ble utviklet og dokumentert uten bruk av tredjeparts proprietær kode, 
+og inneholder kun åpen kildekode og egenutviklet struktur.
+
+Jeg bekrefter at ovennevnte metode og innhold er min egen frembringelse.
+
+Signert:
+Connie Johansen Laudal
+09.11.2025
+_________________________

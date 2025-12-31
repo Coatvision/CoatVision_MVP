@@ -1,0 +1,4 @@
+0000000000000000000000000000000000000000 9699404299e291e206b2dfa7040ff00e401368d8 Coatvision <your_email@example.com> 1762908520 +0100	commit (initial): Init coatvision-app
+9699404299e291e206b2dfa7040ff00e401368d8 9699404299e291e206b2dfa7040ff00e401368d8 Coatvision <your_email@example.com> 1762911046 +0100	checkout: moving from main to chore/upgrade-sdk-54
+9699404299e291e206b2dfa7040ff00e401368d8 e3f070a8b79cff87629abdbd4aaddb56827ff44e Coatvision <your_email@example.com> 1763777983 +0100	commit: Koble LYXvision til CoatVision Core MVP
+e3f070a8b79cff87629abdbd4aaddb56827ff44e e3f070a8b79cff87629abdbd4aaddb56827ff44e Coatvision <your_email@example.com> 1764382052 +0100	checkout: moving from chore/upgrade-sdk-54 to chore/upgrade-sdk-54
