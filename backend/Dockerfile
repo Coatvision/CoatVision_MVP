@@ -26,9 +26,8 @@ RUN mkdir -p uploads outputs
 # Expose port
 EXPOSE 8000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import requests; requests.get('http://localhost:8000/health')" || exit 1
+# Note: Render will perform health checks against the service's configured path.
+# Avoid container-level healthcheck that hardcodes a port; use service healthCheckPath.
 
-# Run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run the application (respect Render-provided $PORT)
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]

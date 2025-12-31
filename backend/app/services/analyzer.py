@@ -1,9 +1,6 @@
 from pathlib import Path
 from typing import Dict, Any, Tuple
 
-import cv2
-import numpy as np
-
 
 def analyze_image(input_path: Path, output_dir: Path) -> Tuple[Path, Dict[str, Any]]:
     """
@@ -13,6 +10,12 @@ def analyze_image(input_path: Path, output_dir: Path) -> Tuple[Path, Dict[str, A
     - Lager et output-bilde
     - Returnerer (sti_til_output, metrics)
     """
+    # Lazy import to avoid startup failures on platforms missing system libs for OpenCV
+    try:
+        import cv2  # type: ignore
+        import numpy as np  # type: ignore
+    except Exception as e:
+        raise RuntimeError(f"OpenCV unavailable: {e}")
 
     img = cv2.imread(str(input_path))
     if img is None:
