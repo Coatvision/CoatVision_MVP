@@ -8,12 +8,14 @@ Option A — SQL Editor (recommended):
 1. Open your Supabase project → SQL Editor.
 2. Paste the contents of `supabase/schema.sql`.
 3. Click Run. You can re-run safely; it uses `IF NOT EXISTS` and `CREATE OR REPLACE`.
+4. Optional: paste and run `supabase/seed.sql` to insert sample data and ensure everything is wired.
 
 Option B — `psql` (requires Postgres client):
 ```bash
 # Set SUPABASE_DB_URL like: postgres://postgres:<password>@db.<project>.supabase.co:5432/postgres
 export SUPABASE_DB_URL="postgres://..."
 psql "$SUPABASE_DB_URL" -f supabase/schema.sql
+psql "$SUPABASE_DB_URL" -f supabase/seed.sql # optional
 ```
 
 ## Environment variables
@@ -31,7 +33,7 @@ SUPABASE_SERVICE_KEY=...
 ```
 
 ## Verification
-Use the existing `verify_and_cleanup.ps1` at repo root:
+Use the existing `verify_and_cleanup.ps1` at repo root to validate RPCs and bucket:
 ```powershell
 $env:SUPABASE_URL = "https://<project>.supabase.co"
 $env:SUPABASE_SERVICE_KEY = "<service_role_key>"
@@ -41,4 +43,8 @@ This writes `verify_output.json` with results.
 
 ## Notes
 - Frontend/mobile must use `anon` key, never the service role.
-- Backend functions in `backend/app/services/supabase_client.py` call the RPCs defined here.
+- Backend functions call the RPCs defined here and should use the service role for writes.
+- Storage bucket `outputs` is created by the schema; confirm in the Supabase Storage UI.
+
+## Env example
+See [supabase/.env.example](supabase/.env.example) for variables to set locally when applying via `psql`.

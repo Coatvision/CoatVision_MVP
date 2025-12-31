@@ -1,8 +1,11 @@
 param(
-  [string]$SchemaPath = "$PSScriptRoot\schema.sql"
+  [string]$SchemaPath = "$PSScriptRoot\schema.sql",
+  [string]$SeedPath   = "$PSScriptRoot\seed.sql",
+  [switch]$ApplySeed
 )
 
 Write-Host "Applying Supabase schema from: $SchemaPath"
+if ($ApplySeed) { Write-Host "Seed file: $SeedPath" }
 
 if (-not (Test-Path $SchemaPath)) {
   Write-Error "Schema file not found: $SchemaPath"
@@ -29,6 +32,15 @@ try {
   & $psql.Source $dbUrl -f $SchemaPath
   if ($LASTEXITCODE -eq 0) {
     Write-Host "Schema applied successfully." -ForegroundColor Green
+    if ($ApplySeed -and (Test-Path $SeedPath)) {
+      Write-Host "Applying seed data..."
+      & $psql.Source $dbUrl -f $SeedPath
+      if ($LASTEXITCODE -eq 0) {
+        Write-Host "Seed applied successfully." -ForegroundColor Green
+      } else {
+        Write-Warning "Seed application returned exit code $LASTEXITCODE"
+      }
+    }
     exit 0
   } else {
     Write-Error "psql exited with code $LASTEXITCODE"
