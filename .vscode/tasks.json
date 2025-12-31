@@ -1,50 +1,69 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "Run Backend (reload)",
-      "type": "shell",
-      "command": "python",
-      "args": [
-        "-m",
-        "uvicorn",
-        "--reload",
-        "--reload-dir",
-        "backend/app",
-        "backend.app.main:app",
-        "--host",
-        "127.0.0.1",
-        "--port",
-        "8000"
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}",
-        "env": {
-          "PERSIST_BASE": "${workspaceFolder}\\local_data"
-        }
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Run Backend (no reload)",
-      "type": "shell",
-      "command": "python",
-      "args": [
-        "-m",
-        "uvicorn",
-        "backend.app.main:app",
-        "--host",
-        "127.0.0.1",
-        "--port",
-        "8000"
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}",
-        "env": {
-          "PERSIST_BASE": "${workspaceFolder}\\local_data"
-        }
-      },
-      "problemMatcher": []
-    }
-  ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Backend (reload)",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"-m",
+				"uvicorn",
+				"--reload",
+				"--reload-dir",
+				"backend/app",
+				"backend.app.main:app",
+				"--host",
+				"127.0.0.1",
+				"--port",
+				"8000"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"PERSIST_BASE": "${workspaceFolder}\\local_data"
+				}
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Run Backend (no reload)",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"-m",
+				"uvicorn",
+				"backend.app.main:app",
+				"--host",
+				"127.0.0.1",
+				"--port",
+				"8000"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"PERSIST_BASE": "${workspaceFolder}\\local_data"
+				}
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Run Backend (venv reload 8001)",
+			"type": "shell",
+			"command": "C:/CoatVision_MVP/.venv/Scripts/python.exe",
+			"args": [
+				"-m",
+				"uvicorn",
+				"--reload",
+				"--reload-dir",
+				"backend/app",
+				"backend.app.main:app",
+				"--host",
+				"127.0.0.1",
+				"--port",
+				"8001"
+			],
+			"isBackground": false,
+			"group": "build"
+		}
+	]
 }

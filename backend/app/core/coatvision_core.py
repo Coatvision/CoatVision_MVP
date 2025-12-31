@@ -15,12 +15,14 @@ def decode_base64_image(base64_str: str) -> np.ndarray:
     img_data = base64.b64decode(base64_str)
     nparr = np.frombuffer(img_data, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    if img is None:
+        raise ValueError("Decoded image is None. The input may not be a valid base64-encoded image.")
     return img
 
 
 def encode_image_base64(img: np.ndarray) -> str:
     _, buffer = cv2.imencode('.png', img)
-    return base64.b64encode(buffer).decode('utf-8')
+    return base64.b64encode(buffer.tobytes()).decode('utf-8')
 
 
 def analyze_coating(image: np.ndarray) -> Dict:
@@ -33,16 +35,16 @@ def analyze_coating(image: np.ndarray) -> Dict:
     edges = cv2.Canny(gray, 50, 150)
     edge_density = float(np.count_nonzero(edges) / edges.size)
 
-    hue_channel = hsv[:, :, 0]
+    hue_channel = hsv[:, :, 0].astype(np.float32)
     hue_std = float(np.std(hue_channel))
     color_uniformity = max(0, 1 - (hue_std / MAX_HUE_STD_DEVIATION))
 
     saturation = hsv[:, :, 1]
-    mean_saturation = float(np.mean(saturation))
+    mean_saturation = float(np.mean(saturation.astype(np.float32)))
     saturation_score = mean_saturation / 255.0
 
     value = hsv[:, :, 2]
-    mean_brightness = float(np.mean(value))
+    mean_brightness = float(np.mean(value.astype(np.float32)))
     brightness_score = mean_brightness / 255.0
 
     _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)

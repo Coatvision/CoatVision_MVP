@@ -9,6 +9,7 @@ from backend.app.core.coatvision_core import (
     analyze_coating,
     decode_base64_image,
 )
+from backend.app.services.supabase_client import insert_analysis_payload
 
 router = APIRouter(prefix="/v1/coatvision", tags=["coatvision-v1"])
 
@@ -40,7 +41,14 @@ async def analyze_image(payload: Dict[str, Any]):
                 f.write(resp.content)
 
             metrics = process_image_file(filename, tmp)
-        return _result_payload(metrics, mode="image")
+        result = _result_payload(metrics, mode="image")
+        # Attach minimal request context and attempt Supabase insert (non-fatal)
+        result["request"] = {"imageUrl": image_url}
+        try:
+            insert_analysis_payload(result)
+        except Exception:
+            pass
+        return result
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -55,6 +63,13 @@ async def analyze_live(payload: Dict[str, Any]):
     try:
         img = decode_base64_image(frame_b64)
         metrics = analyze_coating(img)
-        return _result_payload(metrics, mode="live")
+        result = _result_payload(metrics, mode="live")
+        # Do not store raw base64; only store minimal context
+        result["request"] = {"source": "live"}
+        try:
+            insert_analysis_payload(result)
+        except Exception:
+            pass
+        return result
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

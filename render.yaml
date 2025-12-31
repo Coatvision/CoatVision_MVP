@@ -13,6 +13,12 @@ services:
         value: gpt-4.1-mini
       - key: DATABASE_URL
         sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: JWT_SECRET
+        sync: false
       - key: COATVISION_CORS_ORIGINS
         value: "https://lyxvision.no,https://www.lyxvision.no,https://coatvision.no,https://api.coatvision.no,http://localhost:5173,http://localhost:8081"
       - key: PERSIST_BASE

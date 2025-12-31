@@ -5,7 +5,9 @@
   ],
   "env": {
     "VITE_BACKEND_URL": "https://api.coatvision.no",
-    "VITE_COATVISION_USE_REMOTE": "1"
+    "VITE_COATVISION_USE_REMOTE": "1",
+    "VITE_SUPABASE_URL": "",
+    "VITE_SUPABASE_ANON_KEY": ""
   },
   "buildCommand": "npm ci --prefix coatvision-app && npm run build --prefix coatvision-app",
   "outputDirectory": "coatvision-app/dist"
