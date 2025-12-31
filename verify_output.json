@@ -98,5 +98,5 @@
                        "Set environment variables on Render/Vercel/Expo and redeploy services.",
                        "Backend can now call insert_analysis_from_payload using service role to write analyses."
                    ],
-    "timestamp":  "2025-12-31T03:56:21Z"
+    "timestamp":  "2025-12-31T04:21:50Z"
 }

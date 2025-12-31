@@ -21,12 +21,20 @@ function Invoke-JsonPost {
         return @{ status = $response.StatusCode; body = $response.Content }
     } catch {
         $err = $_.Exception.Message
-        if ($_.Exception.Response) {
+        $resp = $null
+        if ($_.Exception -is [System.Net.WebException]) {
+            $resp = $_.Exception.Response
+        } elseif ($_.Exception.PSObject.Properties.Match('Response').Count -gt 0) {
+            $resp = $_.Exception.Response
+        }
+        if ($resp) {
             try {
-                $reader = New-Object IO.StreamReader($_.Exception.Response.GetResponseStream())
+                $reader = New-Object IO.StreamReader($resp.GetResponseStream())
                 $content = $reader.ReadToEnd()
                 $reader.Close()
-                return @{ status = [int]$_.Exception.Response.StatusCode; body = $content }
+                $statusCode = 0
+                try { $statusCode = [int]$resp.StatusCode } catch { $statusCode = 0 }
+                return @{ status = $statusCode; body = $content }
             } catch {
                 return @{ status = 0; body = $err }
             }
