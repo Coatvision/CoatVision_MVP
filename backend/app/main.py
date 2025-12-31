@@ -29,6 +29,11 @@ app.add_middleware(
 def root():
     return {"status": "ok", "name": "CoatVision Core"}
 
+@app.get("/health")
+def health():
+    """Simple health check used by deployments."""
+    return {"status": "healthy"}
+
 @app.get("/ui")
 def ui():
     """
