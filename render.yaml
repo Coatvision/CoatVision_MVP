@@ -2,17 +2,15 @@
 # This file defines all services that will be deployed to Render
 
 services:
-  # Backend API Service
+  # Backend API Service (Docker runtime to include system libs for OpenCV)
   - type: web
     name: coatvision-backend
-    runtime: python
-    buildCommand: "./build.sh"
-    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
+    env: docker
+    rootDir: backend
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    healthCheckPath: /health
     envVars:
-      - key: PYTHON_VERSION
-        value: "3.11"
-      - key: PORT
-        sync: false
       - key: SECRET_KEY
         generateValue: true
       - key: OPENAI_API_KEY
@@ -21,8 +19,6 @@ services:
         sync: false
       - key: NODE_ENV
         value: production
-    healthCheckPath: /health
-    rootDir: backend
 
   # Frontend Dashboard (Static Site)
   - type: web
