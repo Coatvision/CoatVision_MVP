@@ -16,8 +16,30 @@ jobs:
         python-version: ['3.10']
         node-version: [18]
     steps:
-      - name: Checkout repository
+      - name: Checkout repository (with submodules)
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Init and verify submodules
+        run: |
+          # Explicitly sync and update submodules (belt-and-suspenders approach)
+          git submodule sync --recursive
+          git submodule update --init --recursive
+          echo "Repository layout:"
+          ls -la
+          # If workflow will use admin_portal, verify it exists
+          # This prevents the "working-directory: admin_portal" error
+          if grep -q "working-directory.*admin_portal" .github/workflows/*.yml 2>/dev/null; then
+            if [ ! -d admin_portal ]; then
+              echo "ERROR: admin_portal directory not found after submodule init."
+              echo "Ensure .gitmodules defines the submodule and that the submodule commit exists on this branch."
+              exit 1
+            fi
+          fi
+        shell: bash
 
       - name: Set up Python
         uses: actions/setup-python@v4
