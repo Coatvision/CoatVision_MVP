@@ -1,0 +1,18 @@
+﻿version: "3.8"
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      PORT: 8000
+      NODE_ENV: development
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+      - ./outputs:/app/outputs
+      - ./uploads:/app/uploads
+    ports:
+      - "8000:8000"
+    command: sh -c "uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT:-8000}"

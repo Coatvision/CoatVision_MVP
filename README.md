@@ -1,3 +1,24 @@
+## Deployment (Render) and Environment
+
+- Backend primary URL: update frontend/mobile to use your current Render service URL. Example: https://coatvision-mvp-lyxvision.onrender.com
+- Required backend envs on Render:
+  - `DATABASE_URL`: Supabase Postgres URI
+  - `SUPABASE_URL`: https://<project>.supabase.co
+  - `SUPABASE_SERVICE_KEY`: service role key (server-only)
+  - `NODE_ENV`: production
+  - `SECRET_KEY`: generated locally (see scripts/bootstrap-e2e.ps1)
+- Frontend envs: see [frontend/.env.example](frontend/.env.example)
+  - `VITE_API_URL`: backend base URL
+  - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`
+- Mobile envs:
+  - Use `EXPO_PUBLIC_API_URL`, `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_ANON_KEY` (never service key)
+
+### Supabase Schema
+- Apply via SQL Editor using [supabase/schema.sql](supabase/schema.sql) or run: `supabase/apply-schema.ps1` (requires `psql`).
+- Verify RPCs/tables: run `verify_and_cleanup.ps1` after setting `SUPABASE_URL`/`SUPABASE_SERVICE_KEY`.
+
+### Local Quickstart
+- Execute [scripts/bootstrap-e2e.ps1](scripts/bootstrap-e2e.ps1) to build backend (Docker), optionally apply schema, and verify.
 # CoatVision_MVP
 
 CoatVision is a coating analysis application with a FastAPI backend, React dashboard, and React Native mobile app.

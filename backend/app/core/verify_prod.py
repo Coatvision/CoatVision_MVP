@@ -20,6 +20,18 @@ TEST_IMAGE_URL = "https://picsum.photos/256"
 
 
 def main():
+    """
+    Runs a series of verification checks against a deployed backend instance.
+    Usage:
+        python backend/scripts/verify_prod.py <base_url> [admin_token]
+    Performs:
+        - GET /health
+        - GET /docs
+        - GET /openapi.json
+        - POST /v1/coatvision/analyze-image (with a test image URL)
+        - POST /v1/coatvision/analyze-live (with a fake base64 payload)
+        - Optionally, POST /jobs with admin token if provided
+    """
     if len(sys.argv) < 2:
         print("Usage: python backend/scripts/verify_prod.py <base_url> [admin_token]")
         sys.exit(1)

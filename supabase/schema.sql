@@ -93,3 +93,14 @@ create or replace function public.get_latest_analyses(p_limit int)
 returns setof public.analyses language sql stable security definer as $$
   select * from public.analyses order by created_at desc limit greatest(p_limit, 1);
 $$;
+
+$env:SUPABASE_DB_URL = "postgres://postgres:<password>@db.<project>.supabase.co:5432/postgres"
+Get-Content supabase\schema.sql -Raw | docker run --rm -i `
+  -e SUPABASE_DB_URL="$env:SUPABASE_DB_URL" `
+  postgres:16-alpine `
+  sh -c 'psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -f -'
+PowerShell -ExecutionPolicy Bypass -File scripts\quickstart-local.ps1
+
+$env:SUPABASE_URL = "https://<project>.supabase.co"
+$env:SUPABASE_SERVICE_KEY = "<service_role_key>"
+PowerShell -ExecutionPolicy Bypass -File [bootstrap-e2e.ps1](http://_vscodecontentref_/5) -ApplySchema

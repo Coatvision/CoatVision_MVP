@@ -8,8 +8,9 @@
 
 const getApiBase = () => {
   // Check if running in Expo with environment variables
-  if (typeof process !== 'undefined' && process.env && process.env.EXPO_PUBLIC_API_BASE) {
-    return process.env.EXPO_PUBLIC_API_BASE;
+  if (typeof process !== 'undefined' && process.env) {
+    if (process.env.EXPO_PUBLIC_API_BASE) return process.env.EXPO_PUBLIC_API_BASE;
+    if (process.env.EXPO_PUBLIC_API_URL) return process.env.EXPO_PUBLIC_API_URL;
   }
   // Default fallback - update this for your environment
   return "http://localhost:8000/api";

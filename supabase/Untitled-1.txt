@@ -1,0 +1,2 @@
+$env:SUPABASE_DB_URL = "postgres://postgres:<password>@db.<project>.supabase.co:5432/postgres"
+PowerShell -ExecutionPolicy Bypass -File .\supabase\apply-schema.ps1

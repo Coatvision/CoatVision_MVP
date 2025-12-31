@@ -1,72 +1,40 @@
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Launch via NPM",
-            "request": "launch",
-            "runtimeArgs": [
-                "run-script",
-                "debug"
-            ],
-            "runtimeExecutable": "npm",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "type": "node"
-        },
-
-        {
-            "name": "Python Debugger: Current File",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Launch Edge",
-            "request": "launch",
-            "type": "msedge",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "name": "Run CoatVision Backend (reload)",
-            "type": "python",
-            "request": "launch",
-            "program": "-m",
-            "args": [
-                "uvicorn",
-                "--reload",
-                "--reload-dir",
-                "backend/app",
-                "backend.app.main:app",
-                "--host",
-                "127.0.0.1",
-                "--port",
-                "8000"
-            ],
-            "env": {
-                "PERSIST_BASE": "${workspaceFolder}\\local_data"
-            },
-            "cwd": "${workspaceFolder}"
-        },
-        {
-            "name": "Run CoatVision Backend (no reload)",
-            "type": "python",
-            "request": "launch",
-            "program": "-m",
-            "args": [
-                "uvicorn",
-                "backend.app.main:app",
-                "--host",
-                "127.0.0.1",
-                "--port",
-                "8000"
-            ],
-            "env": {
-                "PERSIST_BASE": "${workspaceFolder}\\local_data"
-            },
-            "cwd": "${workspaceFolder}"
-        }
-    ]
+﻿{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run CoatVision Backend (reload)",
+      "type": "python",
+      "request": "launch",
+      "program": "-m",
+      "args": [
+        "uvicorn",
+        "--reload",
+        "--reload-dir",
+        "backend/app",
+        "backend.app.main:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8000"
+      ],
+      "env": { "PERSIST_BASE": "${workspaceFolder}\\local_data" },
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Run CoatVision Backend (no reload)",
+      "type": "python",
+      "request": "launch",
+      "program": "-m",
+      "args": [
+        "uvicorn",
+        "backend.app.main:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8000"
+      ],
+      "env": { "PERSIST_BASE": "${workspaceFolder}\\local_data" },
+      "cwd": "${workspaceFolder}"
+    }
+  ]
 }

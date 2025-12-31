@@ -74,7 +74,11 @@ if ($ApplySchema -or $env:SUPABASE_DB_URL) {
       Write-Warn "SUPABASE_DB_URL is not set to a real value; skipping schema apply."
     } else {
       Write-Info "Applying schema to: $env:SUPABASE_DB_URL"
-      Get-Content $schema -Raw | docker run --rm -i -e SUPABASE_DB_URL="$env:SUPABASE_DB_URL" postgres:16-alpine sh -c 'psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -f -'
+      $env:SUPABASE_DB_URL = "postgres://postgres:<password>@db.<project>.supabase.co:5432/postgres"
+      Get-Content supabase\schema.sql -Raw | docker run --rm -i `
+        -e SUPABASE_DB_URL="$env:SUPABASE_DB_URL" `
+        postgres:16-alpine `
+        sh -c 'psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -f -'
       Write-Ok "Schema apply attempt finished. Check Supabase tables and RPCs."
     }
   }
