@@ -14,7 +14,7 @@ services:
       - key: DATABASE_URL
         sync: false
       - key: COATVISION_CORS_ORIGINS
-        value: "https://lyxvision.no,https://www.lyxvision.no,http://localhost:5173,http://localhost:8081"
+        value: "https://lyxvision.no,https://www.lyxvision.no,https://coatvision.no,https://api.coatvision.no,http://localhost:5173,http://localhost:8081"
       - key: PERSIST_BASE
         value: /data
       - key: ADMIN_TOKEN
