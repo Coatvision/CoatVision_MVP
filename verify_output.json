@@ -1,0 +1,102 @@
+﻿{
+    "created":  [
+                    {
+                        "name":  "pgcrypto",
+                        "type":  "extension"
+                    },
+                    {
+                        "name":  "uuid-ossp",
+                        "type":  "extension"
+                    },
+                    {
+                        "name":  "public.analyses",
+                        "type":  "table"
+                    },
+                    {
+                        "name":  "public.analyses.anon_read_analyses",
+                        "type":  "policy"
+                    },
+                    {
+                        "name":  "public.analyses.forbid_anon_write_analyses",
+                        "type":  "policy"
+                    },
+                    {
+                        "name":  "public.jobs",
+                        "type":  "table"
+                    },
+                    {
+                        "name":  "public.reports",
+                        "type":  "table"
+                    },
+                    {
+                        "name":  "public.training_sessions",
+                        "type":  "table"
+                    },
+                    {
+                        "name":  "public.insert_analysis_from_payload",
+                        "type":  "function"
+                    },
+                    {
+                        "name":  "public.get_dashboard_summary",
+                        "type":  "function"
+                    },
+                    {
+                        "name":  "public.get_latest_analyses",
+                        "type":  "function"
+                    },
+                    {
+                        "public":  true,
+                        "id":  "outputs",
+                        "type":  "storage_bucket"
+                    }
+                ],
+    "verification":  {
+                         "functions":  "Run via Supabase UI: list RPCs via pg_proc for names insert_analysis_from_payload, get_dashboard_summary, get_latest_analyses.",
+                         "rest_rpc":  {
+                                          "insert_analysis_from_payload":  {
+                                                                               "body":  "Cannot bind parameter \u0027Uri\u0027. Cannot convert value \"https://\u003cproject\u003e.supabase.co/rest/v1/rpc/insert_analysis_from_payload\" to type \"System.Uri\". Error: \"Ugyldig URI. Kan ikke analysere vertsnavnet.\"",
+                                                                               "status":  0
+                                                                           },
+                                          "get_dashboard_summary":  {
+                                                                        "body":  "Cannot bind parameter \u0027Uri\u0027. Cannot convert value \"https://\u003cproject\u003e.supabase.co/rest/v1/rpc/get_dashboard_summary\" to type \"System.Uri\". Error: \"Ugyldig URI. Kan ikke analysere vertsnavnet.\"",
+                                                                        "status":  0
+                                                                    },
+                                          "get_latest_analyses":  {
+                                                                      "body":  "Cannot bind parameter \u0027Uri\u0027. Cannot convert value \"https://\u003cproject\u003e.supabase.co/rest/v1/rpc/get_latest_analyses\" to type \"System.Uri\". Error: \"Ugyldig URI. Kan ikke analysere vertsnavnet.\"",
+                                                                      "status":  0
+                                                                  }
+                                      },
+                         "extensions":  "Run via Supabase UI: SELECT extname, extversion FROM pg_extension ORDER BY extname;",
+                         "rls_analyses":  "Run via Supabase UI: SELECT relname, relrowsecurity FROM pg_class JOIN pg_namespace n ON pg_class.relnamespace=n.oid WHERE n.nspname=\u0027public\u0027 AND relname=\u0027analyses\u0027; and list policies via pg_policy.",
+                         "tables_columns":  "Run via Supabase UI: SELECT table_schema, table_name, column_name, data_type, is_nullable, column_default FROM information_schema.columns WHERE (table_schema=\u0027public\u0027 AND table_name IN (\u0027analyses\u0027,\u0027jobs\u0027,\u0027reports\u0027,\u0027training_sessions\u0027)) ORDER BY table_name, ordinal_position;",
+                         "storage_bucket":  "Run via Supabase UI: SELECT * FROM storage.buckets WHERE id=\u0027outputs\u0027;"
+                     },
+    "warnings":  [
+                     "Ensure SUPABASE_SERVICE_KEY is never embedded in client code.",
+                     "Validate anon key limitations for your frontend use cases."
+                 ],
+    "env_mapping":  {
+                        "backend":  [
+                                        "SUPABASE_URL",
+                                        "SUPABASE_SERVICE_KEY",
+                                        "JWT_SECRET",
+                                        "COATVISION_CORS_ORIGINS"
+                                    ],
+                        "frontend":  [
+                                         "VITE_BACKEND_URL",
+                                         "VITE_COATVISION_USE_REMOTE",
+                                         "VITE_SUPABASE_URL",
+                                         "VITE_SUPABASE_ANON_KEY"
+                                     ],
+                        "mobile":  [
+                                       "EXPO_PUBLIC_COATVISION_API_BASE_URL",
+                                       "EXPO_PUBLIC_COATVISION_USE_REMOTE"
+                                   ]
+                    },
+    "next_steps":  [
+                       "If REST RPC write succeeded, remove the verification record (res_verify) if desired via service role.",
+                       "Set environment variables on Render/Vercel/Expo and redeploy services.",
+                       "Backend can now call insert_analysis_from_payload using service role to write analyses."
+                   ],
+    "timestamp":  "2025-12-31T03:56:21Z"
+}
