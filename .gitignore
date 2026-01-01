@@ -25,3 +25,19 @@ mobile/.expo/
 
 # Logs
 *.log
+
+# Next.js build artifacts
+.next/
+node_stack/frontend/.next/
+node_stack/frontend/node_modules.old/
+
+# Nested dependency/build folders
+**/node_modules/
+**/dist/
+
+# Backend generated files
+backend/outputs/
+backend/uploads/
+
+# Ignore stray backup git files
+coatvision-app/.git.bak/

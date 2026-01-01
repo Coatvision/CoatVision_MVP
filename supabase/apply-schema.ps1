@@ -1,7 +1,8 @@
 param(
   [string]$SchemaPath = "$PSScriptRoot\schema.sql",
   [string]$SeedPath   = "$PSScriptRoot\seed.sql",
-  [switch]$ApplySeed
+  [switch]$ApplySeed,
+  [string]$DotEnvPath = "$PSScriptRoot\.env"
 )
 
 Write-Host "Applying Supabase schema from: $SchemaPath"
@@ -13,6 +14,21 @@ if (-not (Test-Path $SchemaPath)) {
 }
 
 $dbUrl = $env:SUPABASE_DB_URL
+if (-not $dbUrl -and (Test-Path $DotEnvPath)) {
+  Write-Host "Loading environment from: $DotEnvPath"
+  Get-Content $DotEnvPath | ForEach-Object {
+    $line = $_.Trim()
+    if ($line -and -not $line.StartsWith('#') -and $line.Contains('=')) {
+      $key, $val = $line.Split('=',2)
+      $key = $key.Trim()
+      $val = $val.Trim()
+      if ($key -and $val) {
+        Set-Item -Path Env:$key -Value $val
+      }
+    }
+  }
+  $dbUrl = $env:SUPABASE_DB_URL
+}
 if (-not $dbUrl) {
   Write-Warning "SUPABASE_DB_URL is not set."
   Write-Host "Set it like: postgres://postgres:<password>@db.<project>.supabase.co:5432/postgres"
