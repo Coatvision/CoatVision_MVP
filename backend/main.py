@@ -3,7 +3,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import analyze, lyxbot, jobs, calibration, wash, reports
+from routers import analyze, lyxbot, jobs, calibration, wash, reports, logs, status
 
 app = FastAPI(
     title="CoatVision API",
@@ -27,6 +27,8 @@ app.include_router(jobs.router)
 app.include_router(calibration.router)
 app.include_router(wash.router)
 app.include_router(reports.router)
+app.include_router(logs.router)
+app.include_router(status.router)
 
 
 @app.get("/")
@@ -42,7 +44,9 @@ async def root():
             "jobs": "/api/jobs",
             "calibration": "/api/calibration",
             "wash": "/api/wash",
-            "reports": "/api/report"
+            "reports": "/api/report",
+            "logs": "/api/logs",
+            "status": "/api/status"
         }
     }
 
