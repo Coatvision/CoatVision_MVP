@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for coatvision-mvp-mz5dia on 2026-01-01T18:21:37Z
+# fly.toml app configuration file generated for coatvision-mvp-uiqm9q on 2026-01-02T12:32:22Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'coatvision-mvp-mz5dia'
-primary_region = 'arn'
+app = 'coatvision-mvp-uiqm9q'
+primary_region = 'iad'
 
 [build]
   builder = 'paketobuildpacks/builder:base'
